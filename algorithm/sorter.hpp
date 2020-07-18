@@ -8,6 +8,23 @@
 
 class sorter
 {
+private:
+	static void _check_heap(std::vector<int>& vals, int parent, int len){
+		int left = (2 * parent + 1) >= len? INT_MIN:vals[2 * parent + 1];
+		int right = (2 * parent + 2) >= len? INT_MIN:vals[2 * parent + 2];
+
+		if ( (left>right? left:right) > vals[parent]){
+			if (left > right){
+				std::swap(vals[parent], vals[2 * parent + 1]);
+				_check_heap(vals, 2 * parent + 1, len);
+			}
+			else{
+				std::swap(vals[parent], vals[2 * parent + 2]);
+				_check_heap(vals, 2 * parent + 2, len);
+			}
+		}
+	}
+
 public:
 	static void bubble_sort(std::vector<int>& vals) {
 		for (int i = 1; i < vals.size(); i++) {
@@ -133,6 +150,19 @@ public:
 		vals[p] = buffer;
 		quick_sort(vals, start, p - start);
 		quick_sort(vals, p + 1, len - (p - start) - 1);
+	}
+
+	static void heap_sort(std::vector<int>& vals, int len = -1){
+		if (len == -1) len = vals.size();
+
+		if (len < 1) return;
+
+		for (int i = vals.size(); i > 0; i--){
+			for (int j = i / 2 - 1; j >= 0; j--){
+				_check_heap(vals, j, i);
+			}
+			std::swap(vals[i - 1], vals[0]);
+		}
 	}
 
 	static void count_sort(std::vector<int>& vals) {

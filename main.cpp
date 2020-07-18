@@ -10,7 +10,7 @@ int main(int, char**) {
         sort_vals.push_back(rand() % 1000 + 1);
     }
     sorter::quick_sort(sort_vals);
-    //sorter::count_sort(sort_vals);
+    sorter::heap_sort(sort_vals);
 
     std::string imput;
     while (1) {
