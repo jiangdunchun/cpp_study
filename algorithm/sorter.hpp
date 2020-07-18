@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <math.h>
 
 #define INT_MAX 0x7fffffff
 #define INT_MIN 0x80000000
@@ -152,11 +153,7 @@ public:
 		quick_sort(vals, p + 1, len - (p - start) - 1);
 	}
 
-	static void heap_sort(std::vector<int>& vals, int len = -1){
-		if (len == -1) len = vals.size();
-
-		if (len < 1) return;
-
+	static void heap_sort(std::vector<int>& vals){
 		for (int i = vals.size(); i > 0; i--){
 			for (int j = i / 2 - 1; j >= 0; j--){
 				_check_heap(vals, j, i);
@@ -186,5 +183,35 @@ public:
 			}
 		}
 		delete[] buffer;
+	}
+
+	static void radix_sort(std::vector<unsigned int>& vals, int bucket_num = 10){
+		unsigned int max = 0, p = 0;
+
+		for (int i = 0; i < vals.size(); i++) {
+			max = max > vals[i] ? max : vals[i];
+		}
+
+		while ((unsigned int)(max / pow(bucket_num, p)) > 0){
+			p++;
+		}
+
+		std::vector<unsigned int>* buckets = new std::vector<unsigned int>[bucket_num];
+
+		for (int i = 1; i <= p; i++){
+			for (int j = 0; j < vals.size(); j++) {
+				buckets[(vals[j] / (unsigned int)pow(bucket_num, i - 1)) % bucket_num].push_back(vals[j]);
+			}
+			int index = 0;
+			for (int j = 0; j < bucket_num; j++){
+				while(!buckets[j].empty()){
+					vals[index] = buckets[j][0];
+					buckets[j].erase(buckets[j].begin());
+					index++;
+				}
+			}
+		}
+
+		delete [] buckets;
 	}
 };
