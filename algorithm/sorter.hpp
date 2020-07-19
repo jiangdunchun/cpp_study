@@ -185,27 +185,56 @@ public:
 		delete[] buffer;
 	}
 
-	static void radix_sort(std::vector<unsigned int>& vals, int bucket_num = 10){
-		unsigned int max = 0, p = 0;
+	static void bucket_sort(std::vector<int>& vals, int bucket_num = 10){
+		int min = INT_MAX, max = INT_MIN;
+		int delta = vals.size()/(bucket_num - 1);
 
 		for (int i = 0; i < vals.size(); i++) {
+			min = min < vals[i] ? min : vals[i];
 			max = max > vals[i] ? max : vals[i];
 		}
 
-		while ((unsigned int)(max / pow(bucket_num, p)) > 0){
+		std::vector<int>* buckets = new std::vector<int>[bucket_num];
+
+		for (int i = 0; i < vals.size(); i++){
+			buckets[(vals[i] - min)/delta].push_back(vals[i]);
+		}
+		
+		int index = 0;
+		for (int i = 0; i < bucket_num; i++){
+			quick_sort(buckets[i]);
+			while(!buckets[i].empty()){
+				vals[index] = buckets[i][0];
+				buckets[i].erase(buckets[i].begin());
+				index++;
+			}
+		}
+
+		delete [] buckets;
+	}
+
+	static void radix_sort(std::vector<int>& vals, int bucket_num = 10){
+		int min = INT_MAX, max = INT_MIN, p = 0;
+
+		for (int i = 0; i < vals.size(); i++) {
+			min = min < vals[i] ? min : vals[i];
+			max = max > vals[i] ? max : vals[i];
+		}
+
+		while (max / (int)pow(bucket_num, p) > 0){
 			p++;
 		}
 
-		std::vector<unsigned int>* buckets = new std::vector<unsigned int>[bucket_num];
+		std::vector<int>* buckets = new std::vector<int>[bucket_num];
 
 		for (int i = 1; i <= p; i++){
 			for (int j = 0; j < vals.size(); j++) {
-				buckets[(vals[j] / (unsigned int)pow(bucket_num, i - 1)) % bucket_num].push_back(vals[j]);
+				buckets[(vals[j] - min) / (int)pow(bucket_num, i - 1) % bucket_num].push_back(vals[j] - min);
 			}
 			int index = 0;
 			for (int j = 0; j < bucket_num; j++){
 				while(!buckets[j].empty()){
-					vals[index] = buckets[j][0];
+					vals[index] = buckets[j][0] + min;
 					buckets[j].erase(buckets[j].begin());
 					index++;
 				}
