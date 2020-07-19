@@ -10,12 +10,12 @@
 class sorter
 {
 private:
-	static void _check_heap(std::vector<int>& vals, int parent, int len){
+	static void _check_heap(std::vector<int>& vals, int parent, int len) {
 		int left = (2 * parent + 1) >= len? INT_MIN:vals[2 * parent + 1];
 		int right = (2 * parent + 2) >= len? INT_MIN:vals[2 * parent + 2];
 
-		if ( (left>right? left:right) > vals[parent]){
-			if (left > right){
+		if ( (left>right? left:right) > vals[parent]) {
+			if (left > right) {
 				std::swap(vals[parent], vals[2 * parent + 1]);
 				_check_heap(vals, 2 * parent + 1, len);
 			}
@@ -28,9 +28,9 @@ private:
 
 public:
 	static void bubble_sort(std::vector<int>& vals) {
-		for (int i = 1; i < vals.size(); i++) {
+		for(int i = 1; i < vals.size(); i++) {
 			int swap_flag = 0;
-			for (int j = 0; j < vals.size() - i; j++) {
+			for(int j = 0; j < vals.size() - i; j++) {
 				if (vals[j] > vals[j + 1]) {
 					std::swap(vals[j + 1], vals[j]);
 					swap_flag = 1;
@@ -42,9 +42,9 @@ public:
 
 	static void select_sort(std::vector<int>& vals) {
 		int index;
-		for (int i = 0; i < vals.size(); i++) {
+		for(int i = 0; i < vals.size(); i++) {
 			index = i;
-			for (int j = i + 1; j < vals.size(); j++) {
+			for(int j = i + 1; j < vals.size(); j++) {
 				if (vals[index] > vals[j]) index = j;
 			}
 			std::swap(vals[i], vals[index]);
@@ -52,10 +52,10 @@ public:
 	}
 
 	static void insert_sort(std::vector<int>& vals, int delta = 1) {
-		for (int i = 0; i < delta; i++) {
-			for (int j = i + delta; j < vals.size(); j += delta) {
+		for(int i = 0; i < delta; i++) {
+			for(int j = i + delta; j < vals.size(); j += delta) {
 				int buffer = vals[j];
-				for (int k = j - delta; k >= 0; k -= delta){
+				for(int k = j - delta; k >= 0; k -= delta) {
 					if (buffer < vals[k]) {
 						vals[k + delta] = vals[k];
 						if (k - delta < 0) vals[k] = buffer;
@@ -69,8 +69,8 @@ public:
 		}
 	}
 
-	static void shell_sort(std::vector<int>& vals){
-		for (int i = vals.size()/2; i > 0; i = i/2) {
+	static void shell_sort(std::vector<int>& vals) {
+		for(int i = vals.size()/2; i > 0; i = i/2) {
 			insert_sort(vals, i);
 		}
 	}
@@ -90,7 +90,7 @@ public:
 			buffer_left.assign(&vals[start], &vals[start + len / 2 - 1] + 1);
 			buffer_right.assign(&vals[start + len / 2], &vals[start + len - 1] + 1);
 
-			for (int i = 0; i < len; i++) {
+			for(int i = 0; i < len; i++) {
 				if (!buffer_left.empty() && !buffer_right.empty()) {
 					if (buffer_left[0] < buffer_right[0]) {
 						vals[start + i] = buffer_left[0];
@@ -114,7 +114,7 @@ public:
 		
 	}
 
-	static void quick_sort(std::vector<int>& vals, int start = 0, int len = -1){
+	static void quick_sort(std::vector<int>& vals, int start = 0, int len = -1) {
 		if (len == -1) len = vals.size();
 
 		if (len < 1) return;
@@ -126,7 +126,7 @@ public:
 			j = start + len -1;
 
 		while ( i != j) {
-			if (flag == 0){
+			if (flag == 0) {
 				if (vals[j] <= buffer) {
 					vals[p] = vals[j];
 					p = j;
@@ -153,9 +153,9 @@ public:
 		quick_sort(vals, p + 1, len - (p - start) - 1);
 	}
 
-	static void heap_sort(std::vector<int>& vals){
-		for (int i = vals.size(); i > 0; i--){
-			for (int j = i / 2 - 1; j >= 0; j--){
+	static void heap_sort(std::vector<int>& vals) {
+		for(int i = vals.size(); i > 0; i--) {
+			for(int j = i / 2 - 1; j >= 0; j--) {
 				_check_heap(vals, j, i);
 			}
 			std::swap(vals[i - 1], vals[0]);
@@ -165,19 +165,19 @@ public:
 	static void count_sort(std::vector<int>& vals) {
 		int min = INT_MAX, max = INT_MIN;
 
-		for (int i = 0; i < vals.size(); i++) {
+		for(int i = 0; i < vals.size(); i++) {
 			min = min < vals[i] ? min : vals[i];
 			max = max > vals[i] ? max : vals[i];
 		}
 
 		int* buffer = new int[max - min + 1]{0};
-		for (int i = 0; i < vals.size(); i++) {
+		for(int i = 0; i < vals.size(); i++) {
 			buffer[vals[i] - min] = buffer[vals[i] - min] + 1;
 		}
 
 		int index = 0;
-		for (int i = 0; i < max - min + 1; i++) {
-			for (int j = 0; j < buffer[i]; j++) {
+		for(int i = 0; i < max - min + 1; i++) {
+			for(int j = 0; j < buffer[i]; j++) {
 				vals[index] = min + i;
 				index++;
 			}
@@ -185,25 +185,26 @@ public:
 		delete[] buffer;
 	}
 
-	static void bucket_sort(std::vector<int>& vals, int bucket_num = 10){
+	static void bucket_sort(std::vector<int>& vals, int bucket_num = 10) {
 		int min = INT_MAX, max = INT_MIN;
-		int delta = vals.size()/(bucket_num - 1);
 
-		for (int i = 0; i < vals.size(); i++) {
+		for(int i = 0; i < vals.size(); i++) {
 			min = min < vals[i] ? min : vals[i];
 			max = max > vals[i] ? max : vals[i];
 		}
 
+		int delta = (max - min + 1)/(bucket_num - 1);
+
 		std::vector<int>* buckets = new std::vector<int>[bucket_num];
 
-		for (int i = 0; i < vals.size(); i++){
+		for(int i = 0; i < vals.size(); i++) {
 			buckets[(vals[i] - min)/delta].push_back(vals[i]);
 		}
 		
 		int index = 0;
-		for (int i = 0; i < bucket_num; i++){
+		for(int i = 0; i < bucket_num; i++) {
 			quick_sort(buckets[i]);
-			while(!buckets[i].empty()){
+			while(!buckets[i].empty()) {
 				vals[index] = buckets[i][0];
 				buckets[i].erase(buckets[i].begin());
 				index++;
@@ -213,27 +214,27 @@ public:
 		delete [] buckets;
 	}
 
-	static void radix_sort(std::vector<int>& vals, int bucket_num = 10){
+	static void radix_sort(std::vector<int>& vals, int bucket_num = 10) {
 		int min = INT_MAX, max = INT_MIN, p = 0;
 
-		for (int i = 0; i < vals.size(); i++) {
+		for(int i = 0; i < vals.size(); i++) {
 			min = min < vals[i] ? min : vals[i];
 			max = max > vals[i] ? max : vals[i];
 		}
 
-		while (max / (int)pow(bucket_num, p) > 0){
+		while (max / (int)pow(bucket_num, p) > 0) {
 			p++;
 		}
 
 		std::vector<int>* buckets = new std::vector<int>[bucket_num];
 
-		for (int i = 1; i <= p; i++){
-			for (int j = 0; j < vals.size(); j++) {
+		for(int i = 1; i <= p; i++) {
+			for(int j = 0; j < vals.size(); j++) {
 				buckets[(vals[j] - min) / (int)pow(bucket_num, i - 1) % bucket_num].push_back(vals[j] - min);
 			}
 			int index = 0;
-			for (int j = 0; j < bucket_num; j++){
-				while(!buckets[j].empty()){
+			for(int j = 0; j < bucket_num; j++) {
+				while(!buckets[j].empty()) {
 					vals[index] = buckets[j][0] + min;
 					buckets[j].erase(buckets[j].begin());
 					index++;

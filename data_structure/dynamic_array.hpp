@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+
 template <class T>
 class dynamic_array {
 private:
@@ -35,33 +37,33 @@ public:
     }
 
     int is_empty() {
-        if (_size) return 1;
+        if(_size) return 1;
         else return 0;
     }
 
     T at(int index) {
-        if (index >= _size) throw "out of bounds";
+        if(index >= _size) throw "out of bounds";
         return _t_p[index];
     }
 
     void push(T item) {
         _t_p[_size++] = item;
 
-        if (_size > _capacity / 2) {
+        if(_size > _capacity / 2) {
             _resize(2 * _capacity);
         }
     }
 
     void insert(int index, T item) {
-        if (index >= _size) throw "out of bounds";
+        if(index >= _size) throw "out of bounds";
 
-        for (int i = _size; i > index; i--) {
+        for(int i = _size; i > index; i--) {
             _t_p[i] = _t_p[i - 1];
         }
         _t_p[index] = item;
         _size++;
 
-        if (_size > _capacity / 2) {
+        if(_size > _capacity / 2) {
             _resize(2 * _capacity);
         }
     }
@@ -75,22 +77,22 @@ public:
         _t_p[_size] = NULL;
         _size--;
 
-        if (_size < _capacity / 4) {
+        if(_size < _capacity / 4) {
             _resize(_capacity / 2);
         }
         return item;
     }
 
     void remove_at(int index) {
-        if (index >= _size) throw "out of bounds";
+        if(index >= _size) throw "out of bounds";
 
-        for (int i = index; i < _size; i++) {
+        for(int i = index; i < _size; i++) {
             _t_p[i] = _t_p[i + 1];
         }
         _t_p[_size] = NULL;
         _size--;
 
-        if (_size < _capacity / 4) {
+        if(_size < _capacity / 4) {
             _resize(_capacity / 2);
         }
     }
@@ -98,20 +100,20 @@ public:
     int remove(T item) {
 		int num = 0;
         int index = -1;
-        for (int i = 0; i < _size; i++) {
-            if (_t_p[i] == item) {
+        for(int i = 0; i < _size; i++) {
+            if(_t_p[i] == item) {
 				num++;
                 index = i;
             }
 			else {
-				if (num) {
+				if(num) {
 					_t_p[i - num] = _t_p[i];
 				}
 			}
         }
 
 		_size = _size - num;
-		if (_size < _capacity / 4) {
+		if(_size < _capacity / 4) {
 			_resize(_capacity / 2);
 		}
         return index;
@@ -119,8 +121,8 @@ public:
 
     int find(T item) {
         int index = -1;
-        for (int i = 0; i < _size; i++) {
-            if (_t_p[i] == item) {
+        for(int i = 0; i < _size; i++) {
+            if(_t_p[i] == item) {
                 index = i;
             }
         }
