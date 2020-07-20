@@ -50,7 +50,7 @@ public:
         for(int i = 0; i < _key_array[index].size(); i++) {
             if(_key_array[index].at(i).key == key) return _key_array[index].at(i).value;
         }
-        return NULL;
+        throw "not exist this key";
     }
 
     void remove(T_key key) { 
@@ -58,7 +58,7 @@ public:
         if(index >= _array_length) throw "out of bounds in hash function";
 
         for(int i = 0; i < _key_array[index].size(); i++) {
-            if(_key_array[index].at(i).key == key) return _key_array[index].remove_at(i);
+            if(_key_array[index].at(i).key == key) _key_array[index].remove_at(i);
         }
     }
 };

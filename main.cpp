@@ -14,8 +14,8 @@ int main(int, char**) {
     for(int i = 0; i < 100; i++) {
         h_map.add(i, std::to_string(i));
     }
-    std::cout << "hash map exist:" << h_map.exists(56) << std::endl;
-    std::cout << "hash map exist:" << h_map.exists(110) << std::endl;
+    std::cout << "hash map exist 56:" << h_map.exists(56) << std::endl;
+    std::cout << "hash map get 56:" << h_map.get(56) << std::endl;
 
     // clock_t start, finish;
 
