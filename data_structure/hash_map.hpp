@@ -14,7 +14,6 @@ private:
     int _array_length;
     unsigned int (*_hash_func)(T_key);
     
-    
 public:
     hash_map(unsigned int (*hash_func)(T_key), int length) {
         _hash_func = hash_func;

@@ -30,9 +30,9 @@ public:
         return _size;
     }
 
-    int is_empty() {
-        if(_size) return 1;
-        else return 0;
+    bool is_empty() {
+        if(_size) return true;
+        else return false;
     }
 
     T at(int index) {
