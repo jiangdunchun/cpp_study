@@ -32,14 +32,14 @@ public:
         _key_array[index].push({key, value});
     }
 
-    int exists(T_key key) {
+    bool exists(T_key key) {
         int index = _hash_func(key);
         if(index >= _array_length) throw "out of bounds in hash function";
 
         for(int i = 0; i < _key_array[index].size(); i++) {
-            if(_key_array[index].at(i).key == key) return 1;
+            if(_key_array[index].at(i).key == key) return true;
         }
-        return 0;
+        return false;
     }
 
     T_value get(T_key key) {

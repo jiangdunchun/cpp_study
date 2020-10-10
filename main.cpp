@@ -24,17 +24,17 @@ int main(int, char**) {
     tree.insert(13, "13");
     tree.insert(14, "14");
     
-    // hash_map<int, std::string> h_map(hash_int, 17);
-    // for(int i = 0; i < 100; i++) {
-    //     h_map.add(i, std::to_string(i));
-    // }
-    // std::cout << "hash map exist 56:" << h_map.exists(56) << std::endl;
-    // std::cout << "hash map get 56:" << h_map.get(56) << std::endl;
+    hash_map<int, std::string> h_map(hash_int, 17);
+    for(int i = 0; i < 100; i++) {
+        h_map.add(i, std::to_string(i));
+    }
+    std::cout << "hash map exist 56:" << h_map.exists(56) << std::endl;
+    std::cout << "hash map get 56:" << h_map.get(56) << std::endl;
 
     // clock_t start, finish;
 
     // std::vector<int> sort_vals;
-    // for(int i = 0; i < 10000; i++) {
+    // for(int i = 0; i < 20000; i++) {
     //     sort_vals.push_back(rand() % 50000 + 1);
     // }
 

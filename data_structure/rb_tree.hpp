@@ -95,11 +95,7 @@ private:
 		}
 	}
 
-	int _remove_item(T_key key, rb_item* n_ptr, rb_item* p_ptr, int left) {
-		return 0;
-	}
-
-	void _fix(rb_item* n_ptr) {
+	void _fix_insert(rb_item* n_ptr) {
 		if(n_ptr->parent_ptr != nullptr && n_ptr->parent_ptr->red == true) {
 			rb_item* u_ptr = _get_brother(n_ptr->parent_ptr);
 			if(u_ptr != nullptr && u_ptr->red == true) {
@@ -108,7 +104,7 @@ private:
 
 				if(n_ptr->parent_ptr->parent_ptr != root_ptr) n_ptr->parent_ptr->parent_ptr->red = true;
 
-				_fix(n_ptr->parent_ptr->parent_ptr);
+				_fix_insert(n_ptr->parent_ptr->parent_ptr);
 			}
 			else {
 				if(_is_left(n_ptr) == _is_left(n_ptr->parent_ptr)) {
@@ -126,6 +122,9 @@ private:
 		}
 	}
 	
+	bool _remove_item(T_key key, rb_item* n_ptr, rb_item* p_ptr, int left) {
+		return false;
+	}
 public:
 	rb_tree() {	
 	}
@@ -139,8 +138,8 @@ public:
 		item_ptr->key = key;
 		item_ptr->value = value;
 
-		if(_insert_item(item_ptr, root_ptr, nullptr, 0)) {
-			_fix(item_ptr);
+		if(_insert_item(item_ptr, root_ptr, nullptr)) {
+			_fix_insert(item_ptr);
 			return true;
 		}
 		else {
@@ -149,7 +148,7 @@ public:
 		}
 	}
 
-	int remove(T_key key) {
-		return 0;
+	bool remove(T_key key) {
+		return false;
 	}
 };
