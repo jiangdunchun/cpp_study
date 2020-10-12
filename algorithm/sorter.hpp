@@ -214,7 +214,7 @@ public:
 		delete [] buckets;
 	}
 
-	static void radix_sort(std::vector<int>& vals, int bucket_num = 10) {
+	static void radix_sort(std::vector<int>& vals, int radix_num = 10) {
 		int min = INT_MAX, max = INT_MIN, p = 0;
 
 		for(int i = 0; i < vals.size(); i++) {
@@ -222,18 +222,18 @@ public:
 			max = max > vals[i] ? max : vals[i];
 		}
 
-		while (max / (int)pow(bucket_num, p) > 0) {
+		while (max / (int)pow(radix_num, p) > 0) {
 			p++;
 		}
 
-		std::vector<int>* buckets = new std::vector<int>[bucket_num];
+		std::vector<int>* buckets = new std::vector<int>[radix_num];
 
 		for(int i = 1; i <= p; i++) {
 			for(int j = 0; j < vals.size(); j++) {
-				buckets[(vals[j] - min) / (int)pow(bucket_num, i - 1) % bucket_num].push_back(vals[j] - min);
+				buckets[(vals[j] - min) / (int)pow(radix_num, i - 1) % radix_num].push_back(vals[j] - min);
 			}
 			int index = 0;
-			for(int j = 0; j < bucket_num; j++) {
+			for(int j = 0; j < radix_num; j++) {
 				while(!buckets[j].empty()) {
 					vals[index] = buckets[j][0] + min;
 					buckets[j].erase(buckets[j].begin());

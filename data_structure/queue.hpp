@@ -1,24 +1,24 @@
 #pragma once
 
 template <class T>
-class list_queue {
+class queue {
 private:
-	struct list_item {
-		list_item* next_ptr = nullptr;
+	struct queue_item {
+		queue_item* next_ptr = nullptr;
 		T value;
 	};
 
-	list_item* _front_item = nullptr;
-	list_item* _back_item = nullptr;
+	queue_item* _front_item = nullptr;
+	queue_item* _back_item = nullptr;
 	int _size = 0;
 
 
 public:
-	list_queue() {
+	queue() {
 	}
 
-	~list_queue() {
-		list_item* now_item = _front_item;
+	~queue() {
+		queue_item* now_item = _front_item;
 		while(now_item) {
 			_front_item = now_item->next_ptr;
 			delete now_item;
@@ -38,7 +38,7 @@ public:
 	T dequeue() {
 		if(_size == 0) throw "list is null";
 		T out_val = _front_item->value;
-		list_item* now_item = _front_item->next_ptr;
+		queue_item* now_item = _front_item->next_ptr;
 		if(now_item) now_item->last_ptr = nullptr;
 		delete _front_item;
 		_front_item = now_item;
@@ -48,7 +48,7 @@ public:
 	}
 
 	void enqueue(T val) {
-		list_item* new_item = new list_item;
+		queue_item* new_item = new queue_item;
 		new_item->next_ptr = nullptr;
 		new_item->value = val;
 
