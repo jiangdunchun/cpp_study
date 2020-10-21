@@ -2,15 +2,17 @@
 
 #include <cstring>
 
+#define DYNAMIC_ARRAY_CAPACITY_MIN 16
+
 template <class T>
 class dynamic_array {
 private:
     T* _t_p;
     int _size = 0;
-    int _capacity = 16;
+    int _capacity = DYNAMIC_ARRAY_CAPACITY_MIN;
 
     void _resize(int new_capacity) {
-        if (new_capacity < 16) return;
+        if(new_capacity < DYNAMIC_ARRAY_CAPACITY_MIN) return;
         T* n_p = new T[new_capacity];
         memcpy(n_p, _t_p, sizeof(T) * _size);
         delete[] _t_p;
@@ -21,9 +23,8 @@ private:
 
 public:
     dynamic_array() {
-        _t_p = new T[16];
+        _t_p = new T[DYNAMIC_ARRAY_CAPACITY_MIN];
     }
-
     ~dynamic_array() {
         delete[] _t_p;
     }
@@ -31,21 +32,17 @@ public:
     int size() {
         return _size;
     }
-
     int capacity() {
         return _capacity;
     }
-
     bool is_empty() {
         if(_size) return true;
         else return false;
     }
-
     T at(int index) {
         if(index >= _size) throw "out of bounds";
         return _t_p[index];
     }
-
     void push(T item) {
         _t_p[_size++] = item;
 
@@ -53,7 +50,6 @@ public:
             _resize(2 * _capacity);
         }
     }
-
     void insert(int index, T item) {
         if(index >= _size) throw "out of bounds";
 
@@ -67,11 +63,9 @@ public:
             _resize(2 * _capacity);
         }
     }
-
     void prepend(T item) {
         insert(0, item);
     }
-
     T pop() {
         T item = _t_p[_size];
         _t_p[_size] = NULL;
@@ -82,7 +76,6 @@ public:
         }
         return item;
     }
-
     void remove_at(int index) {
         if(index >= _size) throw "out of bounds";
 
@@ -96,7 +89,6 @@ public:
             _resize(_capacity / 2);
         }
     }
-
     int remove(T item) {
 		int num = 0;
         int index = -1;
@@ -118,7 +110,6 @@ public:
 		}
         return index;
     }
-
     int find(T item) {
         int index = -1;
         for(int i = 0; i < _size; i++) {

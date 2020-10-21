@@ -20,7 +20,6 @@ public:
         _array_length = length;
         _key_array = new dynamic_array<map_item>[_array_length];
     }
-
     ~hash_map() {
         delete[] _key_array;
     }
@@ -31,7 +30,6 @@ public:
 
         _key_array[index].push({key, value});
     }
-
     bool exists(T_key key) {
         int index = _hash_func(key);
         if(index >= _array_length) throw "out of bounds in hash function";
@@ -41,7 +39,6 @@ public:
         }
         return false;
     }
-
     T_value get(T_key key) {
         int index = _hash_func(key);
         if(index >= _array_length) throw "out of bounds in hash function";
@@ -51,7 +48,6 @@ public:
         }
         throw "not exist this key";
     }
-
     void remove(T_key key) { 
         int index = _hash_func(key);
         if(index >= _array_length) throw "out of bounds in hash function";

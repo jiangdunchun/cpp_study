@@ -14,8 +14,8 @@ private:
 		int left = (2 * parent + 1) >= len? INT_MIN:vals[2 * parent + 1];
 		int right = (2 * parent + 2) >= len? INT_MIN:vals[2 * parent + 2];
 
-		if ( (left>right? left:right) > vals[parent]) {
-			if (left > right) {
+		if( (left>right? left:right) > vals[parent]) {
+			if(left > right) {
 				std::swap(vals[parent], vals[2 * parent + 1]);
 				_check_heap(vals, 2 * parent + 1, len);
 			}
@@ -31,12 +31,12 @@ public:
 		for(int i = 1; i < vals.size(); i++) {
 			int swap_flag = 0;
 			for(int j = 0; j < vals.size() - i; j++) {
-				if (vals[j] > vals[j + 1]) {
+				if(vals[j] > vals[j + 1]) {
 					std::swap(vals[j + 1], vals[j]);
 					swap_flag = 1;
 				}
 			}
-			if (swap_flag == 0) break;
+			if(swap_flag == 0) break;
 		}
 	}
 
@@ -45,7 +45,7 @@ public:
 		for(int i = 0; i < vals.size(); i++) {
 			index = i;
 			for(int j = i + 1; j < vals.size(); j++) {
-				if (vals[index] > vals[j]) index = j;
+				if(vals[index] > vals[j]) index = j;
 			}
 			std::swap(vals[i], vals[index]);
 		}
@@ -56,9 +56,9 @@ public:
 			for(int j = i + delta; j < vals.size(); j += delta) {
 				int buffer = vals[j];
 				for(int k = j - delta; k >= 0; k -= delta) {
-					if (buffer < vals[k]) {
+					if(buffer < vals[k]) {
 						vals[k + delta] = vals[k];
-						if (k - delta < 0) vals[k] = buffer;
+						if(k - delta < 0) vals[k] = buffer;
 					}
 					else {
 						vals[k + delta] = buffer;
@@ -76,12 +76,12 @@ public:
 	}
 
 	static void merge_sort(std::vector<int>& vals, int start = 0, int len = -1) {
-		if (len == -1) len = vals.size();
+		if(len == -1) len = vals.size();
 
-		if (len == 2) {
-			if (vals[start + 1] < vals[start]) std::swap(vals[start + 1], vals[start]);
+		if(len == 2) {
+			if(vals[start + 1] < vals[start]) std::swap(vals[start + 1], vals[start]);
 		}
-		else if (len > 2) {
+		else if(len > 2) {
 			merge_sort(vals, start, len / 2);
 			merge_sort(vals, start + len / 2, len - len / 2);
 
@@ -91,8 +91,8 @@ public:
 			buffer_right.assign(&vals[start + len / 2], &vals[start + len - 1] + 1);
 
 			for(int i = 0; i < len; i++) {
-				if (!buffer_left.empty() && !buffer_right.empty()) {
-					if (buffer_left[0] < buffer_right[0]) {
+				if(!buffer_left.empty() && !buffer_right.empty()) {
+					if(buffer_left[0] < buffer_right[0]) {
 						vals[start + i] = buffer_left[0];
 						buffer_left.erase(buffer_left.begin());
 					}
@@ -101,11 +101,11 @@ public:
 						buffer_right.erase(buffer_right.begin());
 					}
 				}
-				else if (buffer_left.empty()) {
+				else if(buffer_left.empty()) {
 					vals[start + i] = buffer_right[0];
 					buffer_right.erase(buffer_right.begin());
 				}
-				else if (buffer_right.empty()) {
+				else if(buffer_right.empty()) {
 					vals[start + i] = buffer_left[0];
 					buffer_left.erase(buffer_left.begin());
 				}
@@ -115,9 +115,9 @@ public:
 	}
 
 	static void quick_sort(std::vector<int>& vals, int start = 0, int len = -1) {
-		if (len == -1) len = vals.size();
+		if(len == -1) len = vals.size();
 
-		if (len < 1) return;
+		if(len < 1) return;
 
 		int p = start, 
 			flag = 0, 
@@ -126,8 +126,8 @@ public:
 			j = start + len -1;
 
 		while ( i != j) {
-			if (flag == 0) {
-				if (vals[j] <= buffer) {
+			if(flag == 0) {
+				if(vals[j] <= buffer) {
 					vals[p] = vals[j];
 					p = j;
 					flag = 1;
@@ -137,7 +137,7 @@ public:
 				}
 			}
 			else {
-				if (vals[i] > buffer) {
+				if(vals[i] > buffer) {
 					vals[p] = vals[i];
 					p = i;
 					flag = 0;
