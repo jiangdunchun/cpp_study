@@ -283,15 +283,15 @@ private:
 	}
 	void _in_order_tranverse(rb_item* n_ptr, dynamic_array<T>& ret_array){
 		if(n_ptr != nullptr) {
-			_pre_order_tranverse(n_ptr->left_ptr, ret_array);
+			_in_order_tranverse(n_ptr->left_ptr, ret_array);
 			ret_array.push(n_ptr->value);
-			_pre_order_tranverse(n_ptr->right_ptr, ret_array);
+			_in_order_tranverse(n_ptr->right_ptr, ret_array);
 		}
 	}
 	void _post_order_tranverse(rb_item* n_ptr, dynamic_array<T>& ret_array){
 		if(n_ptr != nullptr) {
-			_pre_order_tranverse(n_ptr->left_ptr, ret_array);
-			_pre_order_tranverse(n_ptr->right_ptr, ret_array);
+			_post_order_tranverse(n_ptr->left_ptr, ret_array);
+			_post_order_tranverse(n_ptr->right_ptr, ret_array);
 			ret_array.push(n_ptr->value);
 		}
 	}

@@ -34,10 +34,24 @@ int main(int, char**) {
         std::cout << std::endl;
     }
 
-    dynamic_array<int> in_array = tree.get_level_order_tranverse();
-    std::cout << "----->level order tranverse of tree :";
+    dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
+    std::cout << "----->pre order tranverse of tree :";
+    for(int j = 0; j < pre_array.size(); j++) {
+            std::cout << pre_array.at(j) << ",";
+    }
+    std::cout << std::endl;
+
+    dynamic_array<int> in_array = tree.get_in_order_tranverse();
+    std::cout << "----->in order tranverse of tree :";
     for(int j = 0; j < in_array.size(); j++) {
             std::cout << in_array.at(j) << ",";
+    }
+    std::cout << std::endl;
+
+    dynamic_array<int> level_array = tree.get_level_order_tranverse();
+    std::cout << "----->level order tranverse of tree :";
+    for(int j = 0; j < level_array.size(); j++) {
+            std::cout << level_array.at(j) << ",";
     }
     std::cout << std::endl;
     
