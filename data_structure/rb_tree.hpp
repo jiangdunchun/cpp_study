@@ -4,6 +4,7 @@
 #define __RB_TREE_HPP__
 
 # include "dynamic_array.hpp"
+# include "queue.hpp"
 
 template <class T>
 class rb_tree {
@@ -335,19 +336,34 @@ public:
 		_destroy_item(n_ptr);
 		return true;
 	}
-	dynamic_array<T> get_pre_order_tranverse(){
+	dynamic_array<T> get_pre_order_tranverse() {
 		dynamic_array<T> ret_array;
 		_pre_order_tranverse(_root_ptr, ret_array);
 		return ret_array;
 	}
-	dynamic_array<T> get_in_order_tranverse(){
+	dynamic_array<T> get_in_order_tranverse() {
 		dynamic_array<T> ret_array;
 		_in_order_tranverse(_root_ptr, ret_array);
 		return ret_array;
 	}
-	dynamic_array<T> get_post_order_tranverse(){
+	dynamic_array<T> get_post_order_tranverse() {
 		dynamic_array<T> ret_array;
 		_post_order_tranverse(_root_ptr, ret_array);
+		return ret_array;
+	}
+	dynamic_array<T> get_level_order_tranverse() {
+		dynamic_array<T> ret_array;
+		queue<rb_item*> buffer;
+
+		if(_root_ptr != nullptr) {
+			buffer.enqueue(_root_ptr);
+			while(!buffer.is_empty()) {
+				rb_item* n_ptr = buffer.dequeue();
+				ret_array.push(n_ptr->value);
+				if(n_ptr->left_ptr != nullptr) buffer.enqueue(n_ptr->left_ptr);
+				if(n_ptr->right_ptr != nullptr) buffer.enqueue(n_ptr->right_ptr);
+			}
+		}
 		return ret_array;
 	}
 };

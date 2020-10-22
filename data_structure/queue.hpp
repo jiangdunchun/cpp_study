@@ -30,32 +30,33 @@ public:
 		return _size;
 	}
 	bool is_empty() {
-		if(_size) return true;
+		if(_size == 0) return true;
 		else return false;
 	}
 	T dequeue() {
 		if(_size == 0) throw "list is null";
+
 		T out_val = _front_ptr->value;
-		queue_item* now_item = _front_ptr->next_ptr;
-		if(now_item) now_item->last_ptr = nullptr;
+
+		queue_item* n_ptr = _front_ptr->next_ptr;
 		delete _front_ptr;
-		_front_ptr = now_item;
+		_front_ptr = n_ptr;
+
 		_size--;
 		if(_size == 0) _back_ptr = nullptr;
+
 		return out_val;
 	}
 	void enqueue(T val) {
-		queue_item* new_item = new queue_item;
-		new_item->next_ptr = nullptr;
-		new_item->value = val;
+		queue_item* n_ptr = new queue_item;
+		n_ptr->next_ptr = nullptr;
+		n_ptr->value = val;
 
-		if(_back_ptr) {
-			_back_ptr->next_ptr = new_item;
-		}
-		_back_ptr = new_item;
-		if(!_front_ptr) {
-			_front_ptr = _back_ptr;
-		}
+		if(_back_ptr != nullptr) _back_ptr->next_ptr = n_ptr;
+		_back_ptr = n_ptr;
+
+		if(_size == 0) _front_ptr = _back_ptr;
+
 		_size++;
 	}
 };

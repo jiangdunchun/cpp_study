@@ -14,6 +14,7 @@ int main(int, char**) {
     std::cout << "hello world" << std::endl;
 
     // test for rb_tree
+    
     rb_tree<int> tree;
     for(int i = 0; i < 20; i++) {
         tree.insert(i);
@@ -32,6 +33,13 @@ int main(int, char**) {
         }
         std::cout << std::endl;
     }
+
+    dynamic_array<int> in_array = tree.get_level_order_tranverse();
+    std::cout << "----->level order tranverse of tree :";
+    for(int j = 0; j < in_array.size(); j++) {
+            std::cout << in_array.at(j) << ",";
+    }
+    std::cout << std::endl;
     
 
     for(int i = 0; i < 20; i++) {
@@ -51,15 +59,19 @@ int main(int, char**) {
         std::cout << std::endl;
     }
     
-    // test for hash_map
     
+    // test for hash_map
+    /*
     hash_map<int, std::string> h_map(hash_int, 17);
     for(int i = 0; i < 100; i++) {
         h_map.add(i, std::to_string(i));
     }
-    std::cout << "hash map exist 56:" << h_map.exists(56) << std::endl;
-    std::cout << "hash map get 56:" << h_map.get(56) << std::endl;
-    
+    for(int i = 0; i < 20; i++) {
+        h_map.remove(i);
+    }
+    std::cout << "hash map exist 56:" << h_map.exists(10) << std::endl;
+    std::cout << "hash map get 56:" << h_map.get(10) << std::endl;
+    */
 
     // test for sort
     /* 
