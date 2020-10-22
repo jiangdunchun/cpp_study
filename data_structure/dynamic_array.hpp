@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __DYNAMIC_ARRAY_HPP__
+#define __DYNAMIC_ARRAY_HPP__
 
 #include <cstring>
 
@@ -19,7 +20,6 @@ private:
         _t_p = n_p;
         _capacity = new_capacity;
     }
-
 
 public:
     dynamic_array() {
@@ -120,3 +120,4 @@ public:
         return index;
     }
 };
+#endif

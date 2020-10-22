@@ -17,20 +17,49 @@ int main(int, char**) {
     rb_tree<int> tree;
     for(int i = 0; i < 20; i++) {
         tree.insert(i);
+
+        dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
+        std::cout << "pre order tranverse of tree after insert " << i << ":";
+        for(int j = 0; j < pre_array.size(); j++) {
+             std::cout << pre_array.at(j) << ",";
+        }
+        std::cout << std::endl;
+
+        dynamic_array<int> in_array = tree.get_in_order_tranverse();
+        std::cout << "in order tranverse of tree after insert " << i << ":";
+        for(int j = 0; j < in_array.size(); j++) {
+             std::cout << in_array.at(j) << ",";
+        }
+        std::cout << std::endl;
     }
+    
+
     for(int i = 0; i < 20; i++) {
         tree.remove(19-i);
+        dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
+        std::cout << "pre order tranverse of tree after delete " << 19-i << ":";
+        for(int j = 0; j < pre_array.size(); j++) {
+             std::cout << pre_array.at(j) << ",";
+        }
+        std::cout << std::endl;
+
+        dynamic_array<int> in_array = tree.get_in_order_tranverse();
+        std::cout << "in order tranverse of tree after delete " << 19-i << ":";
+        for(int j = 0; j < in_array.size(); j++) {
+             std::cout << in_array.at(j) << ",";
+        }
+        std::cout << std::endl;
     }
     
     // test for hash_map
-    /*
+    
     hash_map<int, std::string> h_map(hash_int, 17);
     for(int i = 0; i < 100; i++) {
         h_map.add(i, std::to_string(i));
     }
     std::cout << "hash map exist 56:" << h_map.exists(56) << std::endl;
     std::cout << "hash map get 56:" << h_map.get(56) << std::endl;
-    */
+    
 
     // test for sort
     /* 

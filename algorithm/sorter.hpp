@@ -1,4 +1,7 @@
-#pragma once
+// https://www.runoob.com/w3cnote/ten-sorting-algorithm.html
+
+#ifndef __SORTER_HPP__
+#define __SORTER_HPP__
 
 #include <vector>
 #include <algorithm>
@@ -245,3 +248,4 @@ public:
 		delete [] buckets;
 	}
 };
+#endif

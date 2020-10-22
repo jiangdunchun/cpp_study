@@ -1,4 +1,9 @@
-#pragma once
+// https://www.cnblogs.com/GNLin0820/p/9668378.html
+
+#ifndef __RB_TREE_HPP__
+#define __RB_TREE_HPP__
+
+# include "dynamic_array.hpp"
 
 template <class T>
 class rb_tree {
@@ -23,12 +28,12 @@ private:
 		else if(val > n_ptr->value && n_ptr->right_ptr != nullptr) return _find_item(val, n_ptr->right_ptr);
 		else return nullptr;
 	}
-	rb_item* _find_left(rb_item* n_ptr) {
-		if(n_ptr->left_ptr != nullptr) return _find_left(n_ptr->left_ptr);
+	rb_item* _find_last(rb_item* n_ptr) {
+		if(n_ptr->left_ptr != nullptr) return _find_last(n_ptr->left_ptr);
 		else return n_ptr;
 	}
-	rb_item* _find_right(rb_item* n_ptr) {
-		if(n_ptr->right_ptr != nullptr) return _find_right(n_ptr->right_ptr);
+	rb_item* _find_next(rb_item* n_ptr) {
+		if(n_ptr->right_ptr != nullptr) return _find_next(n_ptr->right_ptr);
 		else return n_ptr;
 	}
 	void _destroy_item(rb_item* n_ptr) {
@@ -38,6 +43,9 @@ private:
 			if(n_ptr->parent_ptr != nullptr) {
 				if(n_ptr == n_ptr->parent_ptr->left_ptr) n_ptr->parent_ptr->left_ptr = nullptr;
 				else n_ptr->parent_ptr->right_ptr = nullptr;
+			}
+			else {
+				_root_ptr = nullptr;
 			}
 			delete n_ptr;
 			n_ptr = nullptr;
@@ -157,7 +165,7 @@ private:
 	}
 	rb_item* _replace_remove(rb_item* n_ptr) {
 		if(n_ptr->left_ptr != nullptr && n_ptr->right_ptr != nullptr) {
-			rb_item* r_ptr = _find_right(n_ptr->left_ptr);
+			rb_item* r_ptr = _find_next(n_ptr->left_ptr);
 			T buffer = n_ptr->value;
 			n_ptr->value = r_ptr->value;
 			r_ptr->value = buffer;
@@ -265,6 +273,27 @@ private:
 			}
 		}
 	}
+	void _pre_order_tranverse(rb_item* n_ptr, dynamic_array<T>& ret_array){
+		if(n_ptr != nullptr) {
+			ret_array.push(n_ptr->value);
+			_pre_order_tranverse(n_ptr->left_ptr, ret_array);
+			_pre_order_tranverse(n_ptr->right_ptr, ret_array);
+		}
+	}
+	void _in_order_tranverse(rb_item* n_ptr, dynamic_array<T>& ret_array){
+		if(n_ptr != nullptr) {
+			_pre_order_tranverse(n_ptr->left_ptr, ret_array);
+			ret_array.push(n_ptr->value);
+			_pre_order_tranverse(n_ptr->right_ptr, ret_array);
+		}
+	}
+	void _post_order_tranverse(rb_item* n_ptr, dynamic_array<T>& ret_array){
+		if(n_ptr != nullptr) {
+			_pre_order_tranverse(n_ptr->left_ptr, ret_array);
+			_pre_order_tranverse(n_ptr->right_ptr, ret_array);
+			ret_array.push(n_ptr->value);
+		}
+	}
 
 public:
 	rb_tree() {	
@@ -306,4 +335,20 @@ public:
 		_destroy_item(n_ptr);
 		return true;
 	}
+	dynamic_array<T> get_pre_order_tranverse(){
+		dynamic_array<T> ret_array;
+		_pre_order_tranverse(_root_ptr, ret_array);
+		return ret_array;
+	}
+	dynamic_array<T> get_in_order_tranverse(){
+		dynamic_array<T> ret_array;
+		_in_order_tranverse(_root_ptr, ret_array);
+		return ret_array;
+	}
+	dynamic_array<T> get_post_order_tranverse(){
+		dynamic_array<T> ret_array;
+		_post_order_tranverse(_root_ptr, ret_array);
+		return ret_array;
+	}
 };
+#endif

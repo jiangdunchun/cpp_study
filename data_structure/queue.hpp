@@ -1,11 +1,13 @@
-#pragma once
+#ifndef __QUEUE_HPP__
+#define __QUEUE_HPP__
 
 template <class T>
 class queue {
 private:
 	struct queue_item {
-		queue_item* next_ptr = nullptr;
 		T value;
+
+		queue_item* next_ptr = nullptr;
 	};
 
 	queue_item* _front_ptr = nullptr;
@@ -42,7 +44,6 @@ public:
 		if(_size == 0) _back_ptr = nullptr;
 		return out_val;
 	}
-
 	void enqueue(T val) {
 		queue_item* new_item = new queue_item;
 		new_item->next_ptr = nullptr;
@@ -58,3 +59,4 @@ public:
 		_size++;
 	}
 };
+#endif

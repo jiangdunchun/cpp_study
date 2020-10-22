@@ -1,11 +1,14 @@
-#pragma once
+#ifndef __LINKED_LIST_HPP__
+#define __LINKED_LIST_HPP__
+
 template <class T>
 class linked_list {
 private:
     struct list_item {
+        T value;
+
         list_item* last_ptr = nullptr;
         list_item* next_ptr = nullptr;
-        T value;
     };
 
     list_item* _front_ptr = nullptr;
@@ -178,3 +181,4 @@ public:
         _back_ptr = buffer;
     }
 };
+#endif
