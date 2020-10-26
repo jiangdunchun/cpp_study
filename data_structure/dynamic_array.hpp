@@ -14,7 +14,7 @@ private:
 
     void _resize(int new_capacity) {
         if(new_capacity < DYNAMIC_ARRAY_CAPACITY_MIN) return;
-        T* n_p = new T[new_capacity];
+        T* n_p = new T[new_capacity]();
         memcpy(n_p, _t_p, sizeof(T) * _size);
         delete[] _t_p;
         _t_p = n_p;
@@ -23,7 +23,7 @@ private:
 
 public:
     dynamic_array() {
-        _t_p = new T[DYNAMIC_ARRAY_CAPACITY_MIN];
+        _t_p = new T[DYNAMIC_ARRAY_CAPACITY_MIN]();
     }
     ~dynamic_array() {
         delete[] _t_p;
@@ -36,49 +36,51 @@ public:
         return _capacity;
     }
     bool is_empty() {
-        if(_size) return true;
-        else return false;
+        return _size == 0;
     }
     T at(int index) {
         if(index >= _size) throw "out of bounds";
         return _t_p[index];
     }
-    void push(T item) {
-        _t_p[_size++] = item;
+    void push(T value) {
+        _t_p[_size++] = value;
 
         if(_size > _capacity / 2) {
             _resize(2 * _capacity);
         }
     }
-    void insert(int index, T item) {
+    void insert(int index, T value) {
         if(index >= _size) throw "out of bounds";
 
         for(int i = _size; i > index; i--) {
             _t_p[i] = _t_p[i - 1];
         }
-        _t_p[index] = item;
+        _t_p[index] = value;
         _size++;
 
         if(_size > _capacity / 2) {
             _resize(2 * _capacity);
         }
     }
-    void prepend(T item) {
-        insert(0, item);
+    void prepend(T value) {
+        insert(0, value);
     }
     T pop() {
-        T item = _t_p[_size];
-        _t_p[_size] = NULL;
+        if (_size == 0) throw "array is empty";
+
+        T value = _t_p[_size-1];
+        _t_p[_size-1] = NULL;
         _size--;
 
         if(_size < _capacity / 4) {
             _resize(_capacity / 2);
         }
-        return item;
+        return value;
     }
-    void remove_at(int index) {
+    T remove_at(int index) {
         if(index >= _size) throw "out of bounds";
 
+        T value = _t_p[index];
         for(int i = index; i < _size; i++) {
             _t_p[i] = _t_p[i + 1];
         }
@@ -88,12 +90,13 @@ public:
         if(_size < _capacity / 4) {
             _resize(_capacity / 2);
         }
+        return value;
     }
-    int remove(T item) {
+    int remove(T value) {
 		int num = 0;
         int index = -1;
         for(int i = 0; i < _size; i++) {
-            if(_t_p[i] == item) {
+            if(_t_p[i] == value) {
 				num++;
                 index = i;
             }
@@ -110,10 +113,10 @@ public:
 		}
         return index;
     }
-    int find(T item) {
+    int find(T value) {
         int index = -1;
         for(int i = 0; i < _size; i++) {
-            if(_t_p[i] == item) {
+            if(_t_p[i] == value) {
                 index = i;
             }
         }

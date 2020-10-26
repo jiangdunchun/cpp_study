@@ -6,6 +6,8 @@
 #include "data_structure/hash_map.hpp"
 #include "data_structure/rb_tree.hpp"
 
+using namespace std;
+
 unsigned int hash_int(int val){
     return (unsigned int)val%17;
 }
@@ -14,24 +16,24 @@ int main(int, char**) {
     std::cout << "hello world" << std::endl;
 
     // test for rb_tree
-    
+
     rb_tree<int> tree;
     for(int i = 0; i < 20; i++) {
         tree.insert(i);
 
         dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
-        std::cout << "pre order tranverse of tree after insert " << i << ":";
-        for(int j = 0; j < pre_array.size(); j++) {
-             std::cout << pre_array.at(j) << ",";
-        }
-        std::cout << std::endl;
+        // std::cout << "pre order tranverse of tree after insert " << i << ":";
+        // for(int j = 0; j < pre_array.size(); j++) {
+        //      std::cout << pre_array.at(j) << ",";
+        // }
+        // std::cout << std::endl;
 
-        dynamic_array<int> in_array = tree.get_in_order_tranverse();
-        std::cout << "in order tranverse of tree after insert " << i << ":";
-        for(int j = 0; j < in_array.size(); j++) {
-             std::cout << in_array.at(j) << ",";
-        }
-        std::cout << std::endl;
+        // dynamic_array<int> in_array = tree.get_in_order_tranverse();
+        // std::cout << "in order tranverse of tree after insert " << i << ":";
+        // for(int j = 0; j < in_array.size(); j++) {
+        //      std::cout << in_array.at(j) << ",";
+        // }
+        // std::cout << std::endl;
     }
 
     dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
@@ -58,21 +60,21 @@ int main(int, char**) {
 
     for(int i = 0; i < 20; i++) {
         tree.remove(19-i);
-        dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
-        std::cout << "pre order tranverse of tree after delete " << 19-i << ":";
-        for(int j = 0; j < pre_array.size(); j++) {
-             std::cout << pre_array.at(j) << ",";
-        }
-        std::cout << std::endl;
+        // dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
+        // std::cout << "pre order tranverse of tree after delete " << 19-i << ":";
+        // for(int j = 0; j < pre_array.size(); j++) {
+        //      std::cout << pre_array.at(j) << ",";
+        // }
+        // std::cout << std::endl;
 
-        dynamic_array<int> in_array = tree.get_in_order_tranverse();
-        std::cout << "in order tranverse of tree after delete " << 19-i << ":";
-        for(int j = 0; j < in_array.size(); j++) {
-             std::cout << in_array.at(j) << ",";
-        }
-        std::cout << std::endl;
+        // dynamic_array<int> in_array = tree.get_in_order_tranverse();
+        // std::cout << "in order tranverse of tree after delete " << 19-i << ":";
+        // for(int j = 0; j < in_array.size(); j++) {
+        //      std::cout << in_array.at(j) << ",";
+        // }
+        // std::cout << std::endl;
     }
-    
+
     
     // test for hash_map
     /*
