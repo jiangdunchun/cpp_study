@@ -11,23 +11,23 @@ private:
     void _fix() {
         for(int i = _size/2-1; i >=0; i--) {
             if((2*i+2) >= _size) {
-                if(vals[2*i+1] > vals[i]) {
-                    T buffer = vals[i];
-                    vals[i] = vals[2*i+1];
-                    vals[2*i+1] = buffer;
+                if(_t_p[2*i+1] > _t_p[i]) {
+                    T buffer = _t_p[i];
+                    _t_p[i] = _t_p[2*i+1];
+                    _t_p[2*i+1] = buffer;
                 }
             }
             else {
-                if((vals[2*i+1]>vals[2*i+2]?vals[2*i+1]:vals[2*i+2]) > vals[i]) {
-                    if(vals[2*i+1]>vals[2*i+2]) {
-                        T buffer = vals[i];
-                        vals[i] = vals[2*i+1];
-                        vals[2*i+1] = buffer;
+                if((_t_p[2*i+1]>_t_p[2*i+2]?_t_p[2*i+1]:_t_p[2*i+2]) > _t_p[i]) {
+                    if(_t_p[2*i+1]>_t_p[2*i+2]) {
+                        T buffer = _t_p[i];
+                        _t_p[i] = _t_p[2*i+1];
+                        _t_p[2*i+1] = buffer;
                     }
                     else {
-                        T buffer = vals[i];
-                        vals[i] = vals[2*i+2];
-                        vals[2*i+2] = buffer;
+                        T buffer = _t_p[i];
+                        _t_p[i] = _t_p[2*i+2];
+                        _t_p[2*i+2] = buffer;
                     }
                 }
             }
@@ -60,7 +60,7 @@ public:
     void push(T value) {
         if (_size == _capacity) throw "heap is full";
 
-        _t_p[_size] == value;
+        _t_p[_size] = value;
         _size++;
         _fix();
     }
@@ -68,8 +68,8 @@ public:
         if (_size == 0) throw "heap is empty";
 
         T value = _t_p[0];
-        _t_p[0] = _t_p[size-1];
-        _t_p[size-1] = NULL;
+        _t_p[0] = _t_p[_size-1];
+        _t_p[_size-1] = NULL;
         _size--;
         _fix();
         return value;

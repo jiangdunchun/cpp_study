@@ -43,7 +43,8 @@ public:
         return _t_p[index];
     }
     void push(T value) {
-        _t_p[_size++] = value;
+        _t_p[_size] = value;
+        _size++;
 
         if(_size > _capacity / 2) {
             _resize(2 * _capacity);
@@ -84,7 +85,7 @@ public:
         for(int i = index; i < _size; i++) {
             _t_p[i] = _t_p[i + 1];
         }
-        _t_p[_size] = NULL;
+        _t_p[_size-1] = NULL;
         _size--;
 
         if(_size < _capacity / 4) {

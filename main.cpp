@@ -5,6 +5,7 @@
 #include "algorithm/sorter.hpp"
 #include "data_structure/hash_map.hpp"
 #include "data_structure/rb_tree.hpp"
+#include "data_structure/max_heap.hpp"
 
 using namespace std;
 
@@ -16,12 +17,12 @@ int main(int, char**) {
     std::cout << "hello world" << std::endl;
 
     // test for rb_tree
-
+    /*
     rb_tree<int> tree;
     for(int i = 0; i < 20; i++) {
         tree.insert(i);
 
-        dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
+        // dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
         // std::cout << "pre order tranverse of tree after insert " << i << ":";
         // for(int j = 0; j < pre_array.size(); j++) {
         //      std::cout << pre_array.at(j) << ",";
@@ -74,7 +75,7 @@ int main(int, char**) {
         // }
         // std::cout << std::endl;
     }
-
+    */
     
     // test for hash_map
     /*
@@ -88,6 +89,16 @@ int main(int, char**) {
     std::cout << "hash map exist 56:" << h_map.exists(10) << std::endl;
     std::cout << "hash map get 56:" << h_map.get(10) << std::endl;
     */
+
+    // test for max_heap
+    max_heap<int> heap(10);
+    for(int i = 0; i < 10; i++) {
+        heap.push(i);
+    }
+    for(int i = 0; i < 10; i++) {
+        std::cout << "max_heap pop " << heap.pop() << std::endl; 
+    }
+    
 
     // test for sort
     /* 
