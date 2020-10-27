@@ -3,7 +3,11 @@
 
 #include <string>
 
+#ifdef DEBUG_MODE            
+#include <iostream>
+
 using namespace std;
+#endif
 
 class string_matcher{
 public:
@@ -44,19 +48,42 @@ public:
         int p_index = 0;
         int s_index = 0;
 
-        int* p_delta = new int[s_len];
-        int* s_next = new int[s_len];
+        int* nexts = new int[s_len]{-1};
 
-        // @ TODO
-        for(int i = 0; i < s_len; i++) {
-            p_delta[i] = 1-i;
-            s_next[i] = 0;
+        for(int i = 1; i < s_len; i++) {
+            int next = 0;
+            for(int j = i-1; j > 0; j--) {
+                bool flag = true; 
+                for(int k = 0; k < j; k++) {
+                    if(s_ptr[k] != s_ptr[k+i-j]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag) {
+                    next = j;
+                    break;
+                }
+            }
+            nexts[i] = next;
         }
+
+#ifdef DEBUG_MODE   
+        cout << "----->kmp match next array of \"" << s_ptr << "\":";    
+        for(int i = 0; i < s_len; i++) {
+            cout << nexts[i] << " ";
+        }
+        cout << endl;
+#endif
 
         while(p_index < p_len && s_index < s_len) {
             if(p_ptr[p_index] != s_ptr[s_index]) {
-                p_index += p_delta[s_index];
-                s_index = s_next[s_index];
+                if(nexts[s_index] < 0) {
+                    p_index++;
+                }
+                else {
+                    s_index = nexts[s_index];
+                }
             }
             else {
                 if(s_index == (s_len-1)) {
@@ -70,8 +97,7 @@ public:
             }
         }
         
-        delete[] p_delta;
-        delete[] s_next;
+        delete[] nexts;
         return ret_val;
     }
 };

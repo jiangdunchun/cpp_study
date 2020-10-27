@@ -174,7 +174,7 @@ int main(int, char**) {
 
     // test for string_matcher
     char* p_ptr = "abcdefghijklmnopqrstuvwxyz";
-    char* s_ptr = "xyz";
+    char* s_ptr = "stu";
     cout << "naive match " << string_matcher::naive_match(p_ptr, s_ptr) << endl;
     cout << "kmp match " << string_matcher::kmp_match(p_ptr, s_ptr) << endl;
 
