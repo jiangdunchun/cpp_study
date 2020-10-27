@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "algorithm/sorter.hpp"
+#include "algorithm/string_matcher.hpp"
 #include "data_structure/hash_map.hpp"
 #include "data_structure/rb_tree.hpp"
 #include "data_structure/max_heap.hpp"
@@ -14,7 +15,7 @@ unsigned int hash_int(int val){
 }
 
 int main(int, char**) {
-    std::cout << "hello world" << std::endl;
+    cout << "hello world" << endl;
 
     // test for rb_tree
     /*
@@ -23,156 +24,163 @@ int main(int, char**) {
         tree.insert(i);
 
         // dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
-        // std::cout << "pre order tranverse of tree after insert " << i << ":";
+        // cout << "pre order tranverse of tree after insert " << i << ":";
         // for(int j = 0; j < pre_array.size(); j++) {
-        //      std::cout << pre_array.at(j) << ",";
+        //      cout << pre_array.at(j) << ",";
         // }
-        // std::cout << std::endl;
+        // cout << endl;
 
         // dynamic_array<int> in_array = tree.get_in_order_tranverse();
-        // std::cout << "in order tranverse of tree after insert " << i << ":";
+        // cout << "in order tranverse of tree after insert " << i << ":";
         // for(int j = 0; j < in_array.size(); j++) {
-        //      std::cout << in_array.at(j) << ",";
+        //      cout << in_array.at(j) << ",";
         // }
-        // std::cout << std::endl;
+        // cout << endl;
     }
 
     dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
-    std::cout << "----->pre order tranverse of tree :";
+    cout << "----->pre order tranverse of tree :";
     for(int j = 0; j < pre_array.size(); j++) {
-            std::cout << pre_array.at(j) << ",";
+            cout << pre_array.at(j) << ",";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     dynamic_array<int> in_array = tree.get_in_order_tranverse();
-    std::cout << "----->in order tranverse of tree :";
+    cout << "----->in order tranverse of tree :";
     for(int j = 0; j < in_array.size(); j++) {
-            std::cout << in_array.at(j) << ",";
+            cout << in_array.at(j) << ",";
     }
-    std::cout << std::endl;
+    cout << endl;
 
     dynamic_array<int> level_array = tree.get_level_order_tranverse();
-    std::cout << "----->level order tranverse of tree :";
+    cout << "----->level order tranverse of tree :";
     for(int j = 0; j < level_array.size(); j++) {
-            std::cout << level_array.at(j) << ",";
+            cout << level_array.at(j) << ",";
     }
-    std::cout << std::endl;
+    cout << endl;
     
 
     for(int i = 0; i < 20; i++) {
         tree.remove(19-i);
         // dynamic_array<int> pre_array = tree.get_pre_order_tranverse();
-        // std::cout << "pre order tranverse of tree after delete " << 19-i << ":";
+        // cout << "pre order tranverse of tree after delete " << 19-i << ":";
         // for(int j = 0; j < pre_array.size(); j++) {
-        //      std::cout << pre_array.at(j) << ",";
+        //      cout << pre_array.at(j) << ",";
         // }
-        // std::cout << std::endl;
+        // cout << endl;
 
         // dynamic_array<int> in_array = tree.get_in_order_tranverse();
-        // std::cout << "in order tranverse of tree after delete " << 19-i << ":";
+        // cout << "in order tranverse of tree after delete " << 19-i << ":";
         // for(int j = 0; j < in_array.size(); j++) {
-        //      std::cout << in_array.at(j) << ",";
+        //      cout << in_array.at(j) << ",";
         // }
-        // std::cout << std::endl;
+        // cout << endl;
     }
     */
     
     // test for hash_map
     /*
-    hash_map<int, std::string> h_map(hash_int, 17);
+    hash_map<int, string> h_map(hash_int, 17);
     for(int i = 0; i < 100; i++) {
-        h_map.add(i, std::to_string(i));
+        h_map.add(i, to_string(i));
     }
     for(int i = 0; i < 20; i++) {
         h_map.remove(i);
     }
-    std::cout << "hash map exist 56:" << h_map.exists(10) << std::endl;
-    std::cout << "hash map get 56:" << h_map.get(10) << std::endl;
+    cout << "hash map exist 56:" << h_map.exists(10) << endl;
+    cout << "hash map get 56:" << h_map.get(10) << endl;
     */
 
     // test for max_heap
+    /*
     max_heap<int> heap(10);
     for(int i = 0; i < 10; i++) {
         heap.push(i);
     }
     for(int i = 0; i < 10; i++) {
-        std::cout << "max_heap pop " << heap.pop() << std::endl; 
+        cout << "max_heap pop " << heap.pop() << endl;
     }
-    
+    */
 
-    // test for sort
+    // test for sorter
     /* 
     clock_t start, finish;
 
-    std::vector<int> sort_vals;
+    vector<int> sort_vals;
     for(int i = 0; i < 20000; i++) {
         sort_vals.push_back(rand() % 50000 + 1);
     }
 
-    std::vector<int> sort_vals_0(sort_vals);
+    vector<int> sort_vals_0(sort_vals);
     start = clock();
     sorter::bubble_sort(sort_vals_0);
     finish = clock();
-    std::cout << "bubble_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "bubble_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_1(sort_vals);
+    vector<int> sort_vals_1(sort_vals);
     start = clock();
     sorter::select_sort(sort_vals_1);
     finish = clock();
-    std::cout << "select_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "select_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_2(sort_vals);
+    vector<int> sort_vals_2(sort_vals);
     start = clock();
     sorter::insert_sort(sort_vals_2);
     finish = clock();
-    std::cout << "insert_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "insert_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_3(sort_vals);
+    vector<int> sort_vals_3(sort_vals);
     start = clock();
     sorter::shell_sort(sort_vals_3);
     finish = clock();
-    std::cout << "shell_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "shell_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_4(sort_vals);
+    vector<int> sort_vals_4(sort_vals);
     start = clock();
     sorter::merge_sort(sort_vals_4);
     finish = clock();
-    std::cout << "merge_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "merge_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_5(sort_vals);
+    vector<int> sort_vals_5(sort_vals);
     start = clock();
     sorter::quick_sort(sort_vals_5);
     finish = clock();
-    std::cout << "quick_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "quick_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_6(sort_vals);
+    vector<int> sort_vals_6(sort_vals);
     start = clock();
     sorter::heap_sort(sort_vals_6);
     finish = clock();
-    std::cout << "heap_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "heap_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_7(sort_vals);
+    vector<int> sort_vals_7(sort_vals);
     start = clock();
     sorter::count_sort(sort_vals_7);
     finish = clock();
-    std::cout << "count_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "count_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_8(sort_vals);
+    vector<int> sort_vals_8(sort_vals);
     start = clock();
     sorter::bucket_sort(sort_vals_8);
     finish = clock();
-    std::cout << "bucket_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "bucket_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
 
-    std::vector<int> sort_vals_9(sort_vals);
+    vector<int> sort_vals_9(sort_vals);
     start = clock();
     sorter::radix_sort(sort_vals_9);
     finish = clock();
-    std::cout << "radix_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << std::endl;
+    cout << "radix_sort time:" << (double)(finish - start) / CLOCKS_PER_SEC << "s"  << endl;
     */
 
-    std::string imput;
+    // test for string_matcher
+    char* p_ptr = "abcdefghijklmnopqrstuvwxyz";
+    char* s_ptr = "xyz";
+    cout << "naive match " << string_matcher::naive_match(p_ptr, s_ptr) << endl;
+    cout << "kmp match " << string_matcher::kmp_match(p_ptr, s_ptr) << endl;
+
+    string imput;
     while(1) {
-        std::cin>>imput;
+        cin>>imput;
         if(imput == "quit") break;
     }
 }

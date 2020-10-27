@@ -7,35 +7,36 @@
 #include <algorithm>
 #include <math.h>
 
+using namespace std;
+
 #define INT_MAX 0x7fffffff
 #define INT_MIN 0x80000000
 
-class sorter
-{
+class sorter {
 private:
-	static void _check_heap(std::vector<int>& vals, int parent, int len) {
+	static void _check_heap(vector<int>& vals, int parent, int len) {
 		int left = (2 * parent + 1) >= len? INT_MIN:vals[2 * parent + 1];
 		int right = (2 * parent + 2) >= len? INT_MIN:vals[2 * parent + 2];
 
 		if( (left>right? left:right) > vals[parent]) {
 			if(left > right) {
-				std::swap(vals[parent], vals[2 * parent + 1]);
+				swap(vals[parent], vals[2 * parent + 1]);
 				_check_heap(vals, 2 * parent + 1, len);
 			}
 			else{
-				std::swap(vals[parent], vals[2 * parent + 2]);
+				swap(vals[parent], vals[2 * parent + 2]);
 				_check_heap(vals, 2 * parent + 2, len);
 			}
 		}
 	}
 
 public:
-	static void bubble_sort(std::vector<int>& vals) {
+	static void bubble_sort(vector<int>& vals) {
 		for(int i = 1; i < vals.size(); i++) {
 			int swap_flag = 0;
 			for(int j = 0; j < vals.size() - i; j++) {
 				if(vals[j] > vals[j + 1]) {
-					std::swap(vals[j + 1], vals[j]);
+					swap(vals[j + 1], vals[j]);
 					swap_flag = 1;
 				}
 			}
@@ -43,18 +44,18 @@ public:
 		}
 	}
 
-	static void select_sort(std::vector<int>& vals) {
+	static void select_sort(vector<int>& vals) {
 		int index;
 		for(int i = 0; i < vals.size(); i++) {
 			index = i;
 			for(int j = i + 1; j < vals.size(); j++) {
 				if(vals[index] > vals[j]) index = j;
 			}
-			std::swap(vals[i], vals[index]);
+			swap(vals[i], vals[index]);
 		}
 	}
 
-	static void insert_sort(std::vector<int>& vals, int delta = 1) {
+	static void insert_sort(vector<int>& vals, int delta = 1) {
 		for(int i = 0; i < delta; i++) {
 			for(int j = i + delta; j < vals.size(); j += delta) {
 				int buffer = vals[j];
@@ -72,24 +73,24 @@ public:
 		}
 	}
 
-	static void shell_sort(std::vector<int>& vals) {
+	static void shell_sort(vector<int>& vals) {
 		for(int i = vals.size()/2; i > 0; i = i/2) {
 			insert_sort(vals, i);
 		}
 	}
 
-	static void merge_sort(std::vector<int>& vals, int start = 0, int len = -1) {
+	static void merge_sort(vector<int>& vals, int start = 0, int len = -1) {
 		if(len == -1) len = vals.size();
 
 		if(len == 2) {
-			if(vals[start + 1] < vals[start]) std::swap(vals[start + 1], vals[start]);
+			if(vals[start + 1] < vals[start]) swap(vals[start + 1], vals[start]);
 		}
 		else if(len > 2) {
 			merge_sort(vals, start, len / 2);
 			merge_sort(vals, start + len / 2, len - len / 2);
 
-			std::vector<int> buffer_left;
-			std::vector<int> buffer_right;
+			vector<int> buffer_left;
+			vector<int> buffer_right;
 			buffer_left.assign(&vals[start], &vals[start + len / 2 - 1] + 1);
 			buffer_right.assign(&vals[start + len / 2], &vals[start + len - 1] + 1);
 
@@ -117,7 +118,7 @@ public:
 		
 	}
 
-	static void quick_sort(std::vector<int>& vals, int start = 0, int len = -1) {
+	static void quick_sort(vector<int>& vals, int start = 0, int len = -1) {
 		if(len == -1) len = vals.size();
 
 		if(len < 1) return;
@@ -156,16 +157,16 @@ public:
 		quick_sort(vals, p + 1, len - (p - start) - 1);
 	}
 
-	static void heap_sort(std::vector<int>& vals) {
+	static void heap_sort(vector<int>& vals) {
 		for(int i = vals.size(); i > 0; i--) {
 			for(int j = i / 2 - 1; j >= 0; j--) {
 				_check_heap(vals, j, i);
 			}
-			std::swap(vals[i - 1], vals[0]);
+			swap(vals[i - 1], vals[0]);
 		}
 	}
 
-	static void count_sort(std::vector<int>& vals) {
+	static void count_sort(vector<int>& vals) {
 		int min = INT_MAX, max = INT_MIN;
 
 		for(int i = 0; i < vals.size(); i++) {
@@ -188,7 +189,7 @@ public:
 		delete[] buffer;
 	}
 
-	static void bucket_sort(std::vector<int>& vals, int bucket_num = 10) {
+	static void bucket_sort(vector<int>& vals, int bucket_num = 10) {
 		int min = INT_MAX, max = INT_MIN;
 
 		for(int i = 0; i < vals.size(); i++) {
@@ -198,7 +199,7 @@ public:
 
 		int delta = (max - min + 1)/(bucket_num - 1);
 
-		std::vector<int>* buckets = new std::vector<int>[bucket_num];
+		vector<int>* buckets = new vector<int>[bucket_num];
 
 		for(int i = 0; i < vals.size(); i++) {
 			buckets[(vals[i] - min)/delta].push_back(vals[i]);
@@ -217,7 +218,7 @@ public:
 		delete [] buckets;
 	}
 
-	static void radix_sort(std::vector<int>& vals, int radix_num = 10) {
+	static void radix_sort(vector<int>& vals, int radix_num = 10) {
 		int min = INT_MAX, max = INT_MIN, p = 0;
 
 		for(int i = 0; i < vals.size(); i++) {
@@ -229,7 +230,7 @@ public:
 			p++;
 		}
 
-		std::vector<int>* buckets = new std::vector<int>[radix_num];
+		vector<int>* buckets = new vector<int>[radix_num];
 
 		for(int i = 1; i <= p; i++) {
 			for(int j = 0; j < vals.size(); j++) {
