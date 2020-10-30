@@ -66,4 +66,5 @@ public:
         return value;
     }
 };
+
 #endif

@@ -75,4 +75,5 @@ public:
         return value;
     }
 };
+
 #endif

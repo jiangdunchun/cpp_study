@@ -184,4 +184,5 @@ public:
         _back_ptr = buffer;
     }
 };
+
 #endif

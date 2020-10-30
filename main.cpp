@@ -7,6 +7,7 @@
 #include "data_structure/hash_map.hpp"
 #include "data_structure/rb_tree.hpp"
 #include "data_structure/max_heap.hpp"
+#include "data_structure/trie.hpp"
 
 using namespace std;
 
@@ -173,10 +174,37 @@ int main(int, char**) {
     */
 
     // test for string_matcher
+    /*
     char* p_ptr = "abcdefghijklmnopqrstuvwxyz";
     char* s_ptr = "stu";
     cout << "naive match " << string_matcher::naive_match(p_ptr, s_ptr) << endl;
     cout << "kmp match " << string_matcher::kmp_match(p_ptr, s_ptr) << endl;
+    */
+
+    // test for trie
+    trie my_trie;
+    char* hello_str = "hello";
+    char* world_str = "world";
+    char* hi_str = "hi";
+    char* hide_str = "hide";
+    char* work_str = "work";
+    char* hire_str = "hire";
+
+    my_trie.insert(hello_str);
+    my_trie.insert(world_str);
+    my_trie.insert(hi_str);
+    my_trie.insert(hide_str);
+    my_trie.insert(work_str);
+    
+    cout << "search \"" << hire_str << "\"" << "in trie:" << my_trie.search(hire_str) << endl;
+    cout << "search \"" << hide_str << "\"" << "in trie:" << my_trie.search(hide_str) << endl;
+
+    dynamic_array<string> word_array = my_trie.get_tranverse();
+    cout << "----->tranverse of trie :";
+    for(int j = 0; j < word_array.size(); j++) {
+            cout << word_array.at(j) << ",";
+    }
+    cout << endl;
 
     string imput;
     while(1) {

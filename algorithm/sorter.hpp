@@ -249,4 +249,5 @@ public:
 		delete [] buckets;
 	}
 };
+
 #endif

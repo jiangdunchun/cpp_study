@@ -3,12 +3,6 @@
 
 #include <string>
 
-#ifdef DEBUG_MODE            
-#include <iostream>
-
-using namespace std;
-#endif
-
 class string_matcher{
 public:
     static int naive_match(string p_ptr, string s_ptr) {
@@ -68,14 +62,6 @@ public:
             nexts[i] = next;
         }
 
-#ifdef DEBUG_MODE   
-        cout << "----->kmp match next array of \"" << s_ptr << "\":";    
-        for(int i = 0; i < s_len; i++) {
-            cout << nexts[i] << " ";
-        }
-        cout << endl;
-#endif
-
         while(p_index < p_len && s_index < s_len) {
             if(p_ptr[p_index] != s_ptr[s_index]) {
                 if(nexts[s_index] < 0) {
@@ -101,4 +87,5 @@ public:
         return ret_val;
     }
 };
+
 #endif

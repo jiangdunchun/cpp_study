@@ -367,4 +367,5 @@ public:
 		return ret_array;
 	}
 };
+
 #endif

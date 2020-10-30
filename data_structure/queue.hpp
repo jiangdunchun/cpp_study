@@ -60,4 +60,5 @@ public:
 		_size++;
 	}
 };
+
 #endif
