@@ -14,7 +14,7 @@ using namespace std;
 class trie {
 private:
     struct trie_item {
-        trie_item* nexts_ptr[26]{nullptr};
+        trie_item* nexts_ptr[ITEM_MAX_NUM]{nullptr};
         bool is_word = false;
     };
 

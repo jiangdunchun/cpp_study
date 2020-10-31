@@ -6,13 +6,18 @@
 #include "algorithm/string_matcher.hpp"
 #include "data_structure/hash_map.hpp"
 #include "data_structure/rb_tree.hpp"
-#include "data_structure/max_heap.hpp"
+#include "data_structure/heap.hpp"
 #include "data_structure/trie.hpp"
+#include "data_structure/huffman_tree.hpp"
 
 using namespace std;
 
 unsigned int hash_int(int val){
     return (unsigned int)val%17;
+}
+
+bool max_heap_contrast_int(int a, int b) {
+    return a<b;
 }
 
 int main(int, char**) {
@@ -92,14 +97,14 @@ int main(int, char**) {
     cout << "hash map get 56:" << h_map.get(10) << endl;
     */
 
-    // test for max_heap
+    // test for heap
     /*
-    max_heap<int> heap(10);
+    heap<int> m_heap(10, max_heap_contrast_int);
     for(int i = 0; i < 10; i++) {
-        heap.push(i);
+        m_heap.push(i);
     }
     for(int i = 0; i < 10; i++) {
-        cout << "max_heap pop " << heap.pop() << endl;
+        cout << "max_heap pop " << m_heap.pop() << endl;
     }
     */
 
@@ -182,6 +187,7 @@ int main(int, char**) {
     */
 
     // test for trie
+    /*
     trie my_trie;
     char* hello_str = "hello";
     char* world_str = "world";
@@ -200,11 +206,19 @@ int main(int, char**) {
     cout << "search \"" << hide_str << "\"" << "in trie:" << my_trie.search(hide_str) << endl;
 
     dynamic_array<string> word_array = my_trie.get_tranverse();
-    cout << "----->tranverse of trie :";
+    cout << "----->tranverse of trie:";
     for(int j = 0; j < word_array.size(); j++) {
             cout << word_array.at(j) << ",";
     }
     cout << endl;
+    */
+
+    // test for huffman_tree
+    /*
+    int huffman_array[5] = {10, 30, 60, 120, 56};
+    huffman_tree<int> my_huffman_tree(huffman_array, 5);
+    */
+
 
     string imput;
     while(1) {

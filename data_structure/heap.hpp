@@ -1,25 +1,31 @@
 #ifndef __MAX_HEAP_HPP__
 #define __MAX_HEAP_HPP__
 
+enum heap_type{
+    MAX_HEAP,
+    MIN_HEAP
+};
+
 template<class T>
-class max_heap {
+class heap {
 private:
     T* _t_p;
     int _capacity;
     int _size = 0;
+    bool (*_contrast_func)(T p_val, T n_val);
 
     void _fix() {
         for(int i = _size/2-1; i >=0; i--) {
             if((2*i+2) >= _size) {
-                if(_t_p[2*i+1] > _t_p[i]) {
+                if(_contrast_func(_t_p[2*i+1], _t_p[i])) {
                     T buffer = _t_p[i];
                     _t_p[i] = _t_p[2*i+1];
                     _t_p[2*i+1] = buffer;
                 }
             }
             else {
-                if((_t_p[2*i+1]>_t_p[2*i+2]?_t_p[2*i+1]:_t_p[2*i+2]) > _t_p[i]) {
-                    if(_t_p[2*i+1]>_t_p[2*i+2]) {
+                if(_contrast_func(_contrast_func(_t_p[2*i+1],_t_p[2*i+2])?_t_p[2*i+1]:_t_p[2*i+2], _t_p[i])) {
+                    if(_contrast_func(_t_p[2*i+1], _t_p[2*i+2])) {
                         T buffer = _t_p[i];
                         _t_p[i] = _t_p[2*i+1];
                         _t_p[2*i+1] = buffer;
@@ -35,11 +41,13 @@ private:
     }
 
 public:
-    max_heap(int size) {
+    heap(int size, bool (*contrast_func)(T p_val, T n_val)) {
+        _contrast_func = contrast_func;
+
         _capacity = size; 
         _t_p = new T[_capacity]();
     }
-    ~max_heap() {
+    ~heap() {
         delete[] _t_p;
     }
 
