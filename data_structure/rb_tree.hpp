@@ -21,12 +21,13 @@ private:
 	};
 
 	rb_item* _root_ptr = nullptr;
+	bool (*_compare_func)(T m_val, T l_val);
 
 	rb_item* _find_item(T val, rb_item* n_ptr) {
 		if(val == n_ptr->value) return n_ptr;
 
-		if(val < n_ptr->value && n_ptr->left_ptr != nullptr) return _find_item(val, n_ptr->left_ptr);
-		else if(val > n_ptr->value && n_ptr->right_ptr != nullptr) return _find_item(val, n_ptr->right_ptr);
+		if(!_compare_func(val, n_ptr->value) && n_ptr->left_ptr != nullptr) return _find_item(val, n_ptr->left_ptr);
+		else if(_compare_func(val, n_ptr->value) && n_ptr->right_ptr != nullptr) return _find_item(val, n_ptr->right_ptr);
 		else return nullptr;
 	}
 	rb_item* _find_last(rb_item* n_ptr) {
@@ -57,7 +58,7 @@ private:
 
 		n_ptr->parent_ptr = p_ptr->parent_ptr;
 		if(n_ptr->parent_ptr != nullptr) {
-			if(n_ptr->value < n_ptr->parent_ptr->value) n_ptr->parent_ptr->left_ptr = n_ptr;
+			if(!_compare_func(n_ptr->value, n_ptr->parent_ptr->value)) n_ptr->parent_ptr->left_ptr = n_ptr;
 			else n_ptr->parent_ptr->right_ptr = n_ptr;
 		}
 		else {
@@ -77,7 +78,7 @@ private:
 		
 		n_ptr->parent_ptr = p_ptr->parent_ptr;
 		if(n_ptr->parent_ptr != nullptr) {
-			if(n_ptr->value < n_ptr->parent_ptr->value) n_ptr->parent_ptr->left_ptr = n_ptr;
+			if(!_compare_func(n_ptr->value, n_ptr->parent_ptr->value)) n_ptr->parent_ptr->left_ptr = n_ptr;
 			else n_ptr->parent_ptr->right_ptr = n_ptr;
 		}
 		else {
@@ -95,7 +96,7 @@ private:
 	bool _insert_item(rb_item* n_ptr, rb_item* p_ptr) {
 		if(p_ptr->value == n_ptr->value) return false;
 
-		if(n_ptr->value > p_ptr->value) {
+		if(_compare_func(n_ptr->value, p_ptr->value)) {
 			if(p_ptr->right_ptr == nullptr) {
 				n_ptr->parent_ptr = p_ptr;
 				p_ptr->right_ptr = n_ptr;
@@ -122,7 +123,7 @@ private:
 		if(p_ptr->color == RED) {
 			if(p_ptr->parent_ptr != nullptr) {
 				rb_item* u_ptr = nullptr;
-				if(p_ptr->value < p_ptr->parent_ptr->value) u_ptr = p_ptr->parent_ptr->right_ptr;
+				if(!_compare_func(p_ptr->value, p_ptr->parent_ptr->value)) u_ptr = p_ptr->parent_ptr->right_ptr;
 				else u_ptr = p_ptr->parent_ptr->left_ptr;
 
 				if(u_ptr != nullptr && u_ptr->color == RED) {
@@ -135,7 +136,7 @@ private:
 				}
 				else {
 					if(n_ptr == p_ptr->left_ptr) {
-						if(p_ptr->value < p_ptr->parent_ptr->value) {
+						if(!_compare_func(p_ptr->value, p_ptr->parent_ptr->value)) {
 							p_ptr->color = BLACK;
 							p_ptr->parent_ptr->color = RED;
 							_right_rotate(p_ptr);
@@ -148,7 +149,7 @@ private:
 						}
 					}
 					else {
-						if(p_ptr->value > p_ptr->parent_ptr->value) {
+						if(_compare_func(p_ptr->value, p_ptr->parent_ptr->value)) {
 							p_ptr->color = BLACK;
 							p_ptr->parent_ptr->color = RED;
 							_left_rotate(p_ptr);
@@ -297,7 +298,8 @@ private:
 	}
 
 public:
-	rb_tree() {	
+	rb_tree(bool (*compare_func)(T m_val, T l_val)) {	
+		_compare_func = compare_func;
 	}
 	~rb_tree() {
 		_destroy_item(_root_ptr);

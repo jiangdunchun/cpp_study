@@ -52,7 +52,7 @@ public:
         throw "not exist this key";
     }
     T_value remove(T_key key) { 
-        T_value value = NULL;
+        T_value value = 0;
         int index = _hash_func(key);
         if(index >= _array_size) throw "out of bounds in hash function";
 

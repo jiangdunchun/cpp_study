@@ -70,7 +70,7 @@ public:
         if (_size == 0) throw "array is empty";
 
         T value = _t_p[_size-1];
-        _t_p[_size-1] = NULL;
+        _t_p[_size-1] = 0;
         _size--;
 
         if(_size < _capacity / 4) {
@@ -85,7 +85,7 @@ public:
         for(int i = index; i < _size; i++) {
             _t_p[i] = _t_p[i + 1];
         }
-        _t_p[_size-1] = NULL;
+        _t_p[_size-1] = 0;
         _size--;
 
         if(_size < _capacity / 4) {

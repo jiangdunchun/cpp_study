@@ -15,17 +15,19 @@ using namespace std;
 unsigned int hash_int(int val){
     return (unsigned int)val%17;
 }
-
-bool max_heap_contrast_int(int a, int b) {
+bool min_compare_int(int a, int b) {
     return a<b;
+}
+bool max_compare_int(int a, int b) {
+    return a>b;
 }
 
 int main(int, char**) {
     cout << "hello world" << endl;
 
     // test for rb_tree
-    /*
-    rb_tree<int> tree;
+    
+    rb_tree<int> tree(max_compare_int);
     for(int i = 0; i < 20; i++) {
         tree.insert(i);
 
@@ -82,7 +84,7 @@ int main(int, char**) {
         // }
         // cout << endl;
     }
-    */
+    
     
     // test for hash_map
     /*
@@ -99,7 +101,7 @@ int main(int, char**) {
 
     // test for heap
     /*
-    heap<int> m_heap(10, max_heap_contrast_int);
+    heap<int> m_heap(10, min_compare_int);
     for(int i = 0; i < 10; i++) {
         m_heap.push(i);
     }
