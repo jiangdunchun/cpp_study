@@ -55,17 +55,17 @@ public:
     bool is_empty() {
         return _size == 0;
     }
-    T top() {
-        if (_size == 0) throw "heap is empty";
-
-        return _t_p[0];
-    }
     void push(T value) {
         if (_size == _capacity) throw "heap is full";
 
         _t_p[_size] = value;
         _size++;
         _fix();
+    }
+    T top() {
+        if (_size == 0) throw "heap is empty";
+
+        return _t_p[0];
     }
     T pop() {
         if (_size == 0) throw "heap is empty";

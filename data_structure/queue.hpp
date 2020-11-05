@@ -34,7 +34,7 @@ public:
 		else return false;
 	}
 	T dequeue() {
-		if(_size == 0) throw "list is null";
+		if(_size == 0) throw "queue is empty";
 
 		T out_val = _front_ptr->value;
 

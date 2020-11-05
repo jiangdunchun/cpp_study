@@ -21,7 +21,7 @@ public:
     ~linked_list() {
         list_item* now_item = _front_ptr;
         while(now_item) {
-            _front_ptr = now_item->next_ptr;
+            now_item = now_item->next_ptr;
             delete now_item;
             now_item = _front_ptr;
         }
@@ -33,47 +33,65 @@ public:
     bool is_empty() {
         return _size == 0;
     }
-    T at(int index) {
-        if(index >= _size) throw "out of bounds";
-        list_item* now_item = _front_ptr;
-        for(int i = 0; i < index; i++) {
-            now_item = now_item->next_ptr;
-        }
-        return now_item->value;
-    }
-    T at_reverse(int index) {
-        if(index >= _size) throw "out of bounds";
-        list_item* now_item = _back_ptr;
-        for(int i = 0; i < index; i++) {
-            now_item = now_item->last_ptr;
-        }
-        return now_item->value;
-    }
-    void push_front(T value){
-        list_item* new_item = new list_item;
-        new_item->last_ptr = nullptr; 
-        new_item->next_ptr = _front_ptr;
-        new_item->value = value;
+    T& at(int index) {
+        if(index >= _size || index < 0) throw "out of bounds";
 
-        if(_front_ptr){
-            _front_ptr->last_ptr = new_item;
+        int i = 0;
+        list_item* now_item = _front_ptr;
+        while(i != index) {
+            now_item = now_item->next_ptr;
+            i++;
         }
-        _front_ptr = new_item;
-        if(!_back_ptr) {
-            _back_ptr = _front_ptr;
+
+        return now_item->value;
+    }
+    T& at_reverse(int index) {
+        if(index >= _size || index < 0) throw "out of bounds";
+
+        int i = 0;
+        list_item* now_item = _back_ptr;
+        while(i != index) {
+            now_item = now_item->last_ptr;
+            i++;
         }
+
+        return now_item->value;
+    }
+    T& front() {
+        if(_size == 0) throw "list is empty";
+
+        return _front_ptr->value;
+    }
+    T& back() {
+        if(_size == 0) throw "list is empty";
+
+        return _back_ptr->value;
+    }
+    void insert_at(int index, T value) {
+        if(index >= _size || index < 0) throw "out of bounds";
+
+        int i = 0;
+        list_item* now_item = _front_ptr;
+        while(i != index) {
+            now_item = now_item->next_ptr;
+            i++;
+        }
+
+        list_item* new_item = new list_item;
+
+        new_item->last_ptr = now_item->last_ptr;
+        if(new_item->last_ptr != nullptr) new_item->last_ptr->next_ptr = new_item;
+        else _front_ptr = new_item;
+
+        new_item->next_ptr = now_item;
+        now_item->last_ptr = new_item;
+
+        new_item->value = value;
+        
         _size++;
     }
-    T pop_front() {
-        if(_size == 0) throw "list is null";
-        T value = _front_ptr->value;
-        list_item* now_item = _front_ptr->next_ptr;
-        if(now_item) now_item->last_ptr = nullptr;
-        delete _front_ptr;
-        _front_ptr = now_item;
-        _size--;
-        if(_size == 0) _back_ptr = nullptr;
-        return value;
+    void push_front(T value){
+        insert_at(0, value);
     }
     void push_back(T value) {
         list_item* new_item = new list_item;
@@ -81,102 +99,74 @@ public:
         new_item->next_ptr = nullptr;
         new_item->value = value;
 
-        if(_back_ptr) {
-            _back_ptr->next_ptr = new_item;
-        }
+        if(new_item->last_ptr != nullptr) new_item->last_ptr->next_ptr = new_item;
         _back_ptr = new_item;
-        if(!_front_ptr) {
-            _front_ptr = _back_ptr;
-        }
+
+        if(_front_ptr == nullptr) _front_ptr = _back_ptr;
+
         _size++;
     }
-    T pop_back() {
-        if(_size == 0) throw "list is null";
-        T value = _back_ptr->value;
-        list_item* now_item = _back_ptr->last_ptr;
-        if(now_item)  now_item->next_ptr = nullptr;
-        delete _back_ptr;
-        _back_ptr = now_item;
-        _size--;
-        if(_size == 0) _front_ptr = nullptr;
-        return value;
-    }
-    T front() {
-        if(_size == 0) throw "list is null";
-        return _front_ptr->value;
-    }
-    T back() {
-        if(_size == 0) throw "list is null";
-        return _back_ptr->value;
-    }
-    void insert(int index, T value) {
-        if(index >= _size) throw "out of bounds";
+    T remove_at(int index) {
+        if(index >= _size || index < 0) throw "out of bounds";
 
+        int i = 0;
         list_item* now_item = _front_ptr;
-        for(int i = 0; i < index; i++) {
+        while(i != index) {
             now_item = now_item->next_ptr;
+            i++;
         }
 
-        list_item* new_item = new list_item;
-        new_item->last_ptr = now_item->last_ptr;
-        new_item->next_ptr = now_item;
-        new_item->value = value;
+        T value = now_item->value;
 
-        if(new_item->last_ptr) new_item->last_ptr->next_ptr = new_item;
-        if(new_item->next_ptr) new_item->next_ptr->last_ptr = new_item;
-
-        if(!new_item->last_ptr) _front_ptr = new_item;
-        if(!new_item->next_ptr) _back_ptr = new_item;
-        _size++;
-    }
-    void remove_at(int index) {
-        if(index >= _size) throw "out of bounds";
-
-        list_item* now_item = _front_ptr;
-        for(int i = 0; i < index; i++) {
-            now_item = now_item->next_ptr;
-        }
-
-        if(now_item->last_ptr) now_item->last_ptr->next_ptr = now_item->next_ptr;
+        if(now_item->last_ptr != nullptr) now_item->last_ptr->next_ptr = now_item->next_ptr;
         else _front_ptr = now_item->next_ptr;
 
-        if(now_item->next_ptr) now_item->next_ptr->last_ptr = now_item->last_ptr;
+        if(now_item->next_ptr != nullptr) now_item->next_ptr->last_ptr = now_item->last_ptr;
         else _back_ptr = now_item->last_ptr;
 
 		delete now_item;
         _size--;
+
+        return value;
     }
-    int remove(T value){
-		int num = 0;
+    T pop_front() {
+        return remove_at(0);
+    }
+    T pop_back() {
+        // @TODO: delete from the end
+        return remove_at(_size-1);
+    }
+    int find(T value) {
         int index = -1;
+
+        int i = 0;
         list_item* now_item = _front_ptr;
-		while(now_item){
-			list_item* next_item = now_item->next_ptr;
-			if(now_item->value == value){
-				index = num;
-				if(now_item->last_ptr) now_item->last_ptr->next_ptr = now_item->next_ptr;
-				else _front_ptr = now_item->next_ptr;
+        while(i != _size) {
+            if(now_item->value == value) {
+                index = i;
+                break;
+            }
+            else{
+                now_item = now_item->next_ptr;
+            }
+            i++;
+        }
 
-				if(now_item->next_ptr) now_item->next_ptr->last_ptr = now_item->last_ptr;
-				else _back_ptr = now_item->last_ptr;
-
-				delete now_item;
-				_size--;
-			}
-			now_item = next_item;
-			num++;
-		}
         return index;
     }
     void reverse(){
+        if(_size == 0) return;
+
+        int i = 0;
         list_item* buffer;
         list_item* now_item = _front_ptr;
-        while(now_item){
+        while(i != _size) {
             buffer = now_item->last_ptr;
             now_item->last_ptr = now_item->next_ptr;
             now_item->next_ptr = buffer;
 
-            now_item = now_item->next_ptr;
+            now_item = now_item->last_ptr;
+            i++;
         }
 
         buffer = _front_ptr;

@@ -17,7 +17,9 @@ private:
         }
     };
     
-    static bool _min_heap_compare_func(huffman_item* a, huffman_item* b) {
+    huffman_item* _root = nullptr;
+
+    static bool _min_compare_func(huffman_item* a, huffman_item* b) {
         return a->value<b->value;
     }
     void _delete_item(huffman_item* n_ptr) {
@@ -33,12 +35,10 @@ private:
         delete n_ptr;
         n_ptr = nullptr;
     }
-
-    huffman_item* _root = nullptr;
-
+    
 public:
     huffman_tree(T* vals, int length) {
-        heap<huffman_item*>* min_heap = new heap<huffman_item*>(length, _min_heap_compare_func);
+        heap<huffman_item*>* min_heap = new heap<huffman_item*>(length, _min_compare_func);
         for(int i = 0; i < length; i++) {
             huffman_item* n_ptr = new huffman_item();
             n_ptr->value = vals[i];

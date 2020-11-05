@@ -3,6 +3,8 @@
 
 #include "dynamic_array.hpp"
 
+//#include <iostream>
+
 template<class T_key, class T_value>
 class hash_map {
 private:
@@ -27,13 +29,13 @@ public:
         delete[] _key_array;
     }
 
-    void add(T_key key, T_value value) {
+    void push(T_key key, T_value value) {
         int index = _hash_func(key);
         if(index >= _array_size) throw "out of bounds in hash function";
 
-        _key_array[index].push({key, value});
+        _key_array[index].push_back({key, value});
     }
-    bool exists(T_key key) {
+    bool exist(T_key key) {
         int index = _hash_func(key);
         if(index >= _array_size) throw "out of bounds in hash function";
 
@@ -42,7 +44,7 @@ public:
         }
         return false;
     }
-    T_value get(T_key key) {
+    T_value& at(T_key key) {
         int index = _hash_func(key);
         if(index >= _array_size) throw "out of bounds in hash function";
 
@@ -52,7 +54,7 @@ public:
         throw "not exist this key";
     }
     T_value remove(T_key key) { 
-        T_value value = 0;
+        T_value value;
         int index = _hash_func(key);
         if(index >= _array_size) throw "out of bounds in hash function";
 
@@ -61,6 +63,7 @@ public:
             {
                 value = _key_array[index].at(i).value;
                 _key_array[index].remove_at(i);
+                break;
             }
         }
         return value;

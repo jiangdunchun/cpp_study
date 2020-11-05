@@ -38,24 +38,18 @@ public:
     bool is_empty() {
         return _size == 0;
     }
-    T at(int index) {
+    T& at(int index) {
         if(index >= _size) throw "out of bounds";
         return _t_p[index];
     }
-    void push(T value) {
-        _t_p[_size] = value;
-        _size++;
-
-        if(_size > _capacity / 2) {
-            _resize(2 * _capacity);
-        }
-    }
-    void insert(int index, T value) {
-        if(index >= _size) throw "out of bounds";
+    void insert_at(int index, T value) {
+        if(index >= _size || index < 0) throw "out of bounds";
 
         for(int i = _size; i > index; i--) {
-            _t_p[i] = _t_p[i - 1];
+            _t_p[i] = _t_p[i-1];
         }
+        // @TODO: use memcpy
+        // memcpy(&_t_p[index+1], &_t_p[index], sizeof(T) * (_size-index));
         _t_p[index] = value;
         _size++;
 
@@ -63,29 +57,28 @@ public:
             _resize(2 * _capacity);
         }
     }
-    void prepend(T value) {
-        insert(0, value);
+    void push_front(T value) {
+        insert_at(0, value);
     }
-    T pop() {
-        if (_size == 0) throw "array is empty";
+    void push_back(T value) {
+        _t_p[_size] = value;
+        _size++;
 
-        T value = _t_p[_size-1];
-        _t_p[_size-1] = 0;
-        _size--;
-
-        if(_size < _capacity / 4) {
-            _resize(_capacity / 2);
+        if(_size > _capacity / 2) {
+            _resize(2 * _capacity);
         }
-        return value;
     }
     T remove_at(int index) {
-        if(index >= _size) throw "out of bounds";
+        if(index >= _size || index < 0) throw "out of bounds";
 
         T value = _t_p[index];
         for(int i = index; i < _size; i++) {
-            _t_p[i] = _t_p[i + 1];
+            _t_p[i] = _t_p[i+1];
         }
-        _t_p[_size-1] = 0;
+        // @TODO: use memcpy
+        // memcpy(&_t_p[index], &_t_p[index+1], sizeof(T) * (_size-index-1));
+        // @TODO: set last position to null
+        //_t_p[_size-1] = NULL;
         _size--;
 
         if(_size < _capacity / 4) {
@@ -93,32 +86,18 @@ public:
         }
         return value;
     }
-    int remove(T value) {
-		int num = 0;
-        int index = -1;
-        for(int i = 0; i < _size; i++) {
-            if(_t_p[i] == value) {
-				num++;
-                index = i;
-            }
-			else {
-				if(num) {
-					_t_p[i - num] = _t_p[i];
-				}
-			}
-        }
-
-		_size = _size - num;
-		if(_size < _capacity / 4) {
-			_resize(_capacity / 2);
-		}
-        return index;
+    T pop_front() {
+        return remove_at(0);
+    }
+    T pop_back() {
+        return remove_at(_size-1);
     }
     int find(T value) {
         int index = -1;
         for(int i = 0; i < _size; i++) {
             if(_t_p[i] == value) {
                 index = i;
+                break;
             }
         }
         return index;

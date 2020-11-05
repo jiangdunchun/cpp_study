@@ -38,7 +38,7 @@ private:
         return item_ptr->nexts_ptr[letter - DELTA_0];
     }
     void _tranverse(trie_item* item_ptr, dynamic_array<string>& ret_val, string buffer) {
-        if(item_ptr->is_word) ret_val.push(buffer);
+        if(item_ptr->is_word) ret_val.push_back(buffer);
         for(int i = 0; i < ITEM_MAX_NUM; i++) {
             if(item_ptr->nexts_ptr[i] != nullptr) {
                 string n_buffer = buffer;
