@@ -376,27 +376,13 @@ int main(int, char**) {
     int my_huffman_array[5] = {10, 30, 60, 120, 56};
     huffman_tree<int> my_huffman_tree(my_huffman_array, 5);
 
-    dynamic_array<int> pre_array = my_huffman_tree.get_pre_order_tranverse();
-    cout << "pre order tranverse of my_huffman_tree: ";
-    for(int j = 0; j < pre_array.size(); j++) {
-            cout << pre_array.at(j) << ",";
-    }
-    cout << endl;
-
-    dynamic_array<int> in_array = my_huffman_tree.get_in_order_tranverse();
-    cout << "in order tranverse of my_huffman_tree: ";
-    for(int j = 0; j < in_array.size(); j++) {
-            cout << in_array.at(j) << ",";
-    }
-    cout << endl;
-
     dynamic_array<int> level_array = my_huffman_tree.get_level_order_tranverse();
     cout << "level order tranverse of my_huffman_tree: ";
     for(int j = 0; j < level_array.size(); j++) {
             cout << level_array.at(j) << ",";
     }
     cout << endl;
-    cout << "test for trie------------->"<< endl;
+    cout << "-----------------------------"<< endl;
     */
 
     // test for sorter
@@ -477,10 +463,10 @@ int main(int, char**) {
     // @TODO: change the test str
     string p_str = "";
     for(int i = 1; i < 100000; i++) {
-        p_str += "xy";
+        p_str += "abcdefgh";
     }
     p_str += "z";
-    string s_str = "xyxyxyxyxyz";
+    string s_str = "abcdefghz";
     clock_t str_start, str_finish;
 
     str_start = clock();
