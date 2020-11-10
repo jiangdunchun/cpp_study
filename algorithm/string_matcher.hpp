@@ -1,5 +1,5 @@
-#ifndef __STRING_MATCHER__
-#define __STRING_MATCHER__
+#ifndef __STRING_MATCHER_HPP__
+#define __STRING_MATCHER_HPP__
 
 #include <string>
 

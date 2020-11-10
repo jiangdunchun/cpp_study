@@ -10,6 +10,7 @@
 #include "data_structure/rb_tree.hpp"
 #include "data_structure/trie.hpp"
 #include "data_structure/huffman_tree.hpp"
+#include "data_structure/graph.hpp"
 
 #include "algorithm/sorter.hpp"
 #include "algorithm/string_matcher.hpp"
@@ -352,11 +353,11 @@ int main(int, char**) {
     string work_str = "work";
     string hire_str = "hire";
 
-    my_trie.insert(hello_str);
-    my_trie.insert(world_str);
-    my_trie.insert(hi_str);
-    my_trie.insert(hide_str);
-    my_trie.insert(work_str);
+    my_trie.push(hello_str);
+    my_trie.push(world_str);
+    my_trie.push(hi_str);
+    my_trie.push(hide_str);
+    my_trie.push(work_str);
     
     cout << "search \"" << hire_str << "\"" << "in my_trie:" << my_trie.search(hire_str) << endl;
     cout << "search \"" << hide_str << "\"" << "in my_trie:" << my_trie.search(hide_str) << endl;
@@ -384,7 +385,29 @@ int main(int, char**) {
     cout << endl;
     cout << "-----------------------------"<< endl;
     */
+    
+    // test for graph
+    /*
+    adjacency_list_graph<string, int> my_al_graph;
+    int A_index = my_al_graph.push_vertex("A");
+    int B_index = my_al_graph.push_vertex("B");
+    int C_index = my_al_graph.push_vertex("C");
+    int D_index = my_al_graph.push_vertex("D");
+    int E_index = my_al_graph.push_vertex("E");
+    int F_index = my_al_graph.push_vertex("F");
+    int G_index = my_al_graph.push_vertex("G");
 
+    my_al_graph.push_edge(A_index, B_index, 2);
+    my_al_graph.push_edge(A_index, C_index, 1);
+    my_al_graph.push_edge(B_index, C_index, 5);
+    my_al_graph.push_edge(B_index, D_index, 4);
+    my_al_graph.push_edge(B_index, E_index, 6);
+    my_al_graph.push_edge(C_index, E_index, 3);
+    my_al_graph.push_edge(D_index, G_index, 2);
+    my_al_graph.push_edge(B_index, F_index, 7);
+    my_al_graph.push_edge(F_index, G_index, 1);
+    */
+    
     // test for sorter
     /*
     cout << "test for sorter------------->"<< endl;

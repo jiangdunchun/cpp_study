@@ -1,5 +1,5 @@
-#ifndef __HUFFMAN_TREE__
-#define __HUFFMAN_TREE__
+#ifndef __HUFFMAN_TREE_HPP__
+#define __HUFFMAN_TREE_HPP__
 
 #include "heap.hpp"
 #include "dynamic_array.hpp"
@@ -34,7 +34,7 @@ private:
     }
 
 public:
-    huffman_tree(T* vals, unsigned int length) {
+    huffman_tree(T* vals, int length) {
         heap<huffman_item*>* min_heap = new heap<huffman_item*>(length, _min_compare_func);
         for(int i = 0; i < length; i++) {
             huffman_item* n_ptr = new huffman_item();

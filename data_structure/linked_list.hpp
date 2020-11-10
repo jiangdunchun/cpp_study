@@ -6,7 +6,6 @@ class linked_list {
 private:
     struct list_item {
         T value;
-
         list_item* last_ptr = nullptr;
         list_item* next_ptr = nullptr;
     };

@@ -6,7 +6,6 @@ class queue {
 private:
 	struct queue_item {
 		T value;
-
 		queue_item* next_ptr = nullptr;
 	};
 

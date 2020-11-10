@@ -13,7 +13,6 @@ private:
 
 	struct rb_item {
 		T value;
-
 		rb_item* parent_ptr = nullptr;
 		rb_item* left_ptr = nullptr;
 		rb_item* right_ptr = nullptr;

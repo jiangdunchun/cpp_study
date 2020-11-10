@@ -1,7 +1,6 @@
 #ifndef __TRIE_HPP__
 #define __TRIE_HPP__
 
-#include <string>
 #include "dynamic_array.hpp"
 
 using namespace std;
@@ -54,7 +53,7 @@ public:
         _delete_item(_root);
     }
 
-    bool insert(string word) {
+    bool push(string word) {
         for(int i = 0; i < word.length(); i++) {
             if(!IS_LOWER_LETTER(word[i])) throw "word must be in lower letter";
         }
