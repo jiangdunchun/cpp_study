@@ -13,6 +13,7 @@ private:
         T_value value;
     };
 
+    // @TODO: linked list rather than dyamic array
     dynamic_array<map_item>* _key_array;
     int _array_size;
     unsigned int (*_hash_func)(T_key);

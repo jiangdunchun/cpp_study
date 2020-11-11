@@ -39,7 +39,7 @@ public:
         return _size == 0;
     }
     T& at(int index) {
-        if(index >= _size) throw "out of bounds";
+        if(index >= _size || index < 0) throw "out of bounds";
         return _t_p[index];
     }
     void insert_at(int index, T value) {

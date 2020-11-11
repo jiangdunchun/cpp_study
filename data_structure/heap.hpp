@@ -36,10 +36,10 @@ private:
     }
 
 public:
-    heap(int size, bool (*compare_func)(T m_val, T l_val)) {
+    heap(int capacity, bool (*compare_func)(T m_val, T l_val)) {
         _compare_func = compare_func;
 
-        _capacity = size; 
+        _capacity = capacity; 
         _t_p = new T[_capacity]();
     }
     ~heap() {
