@@ -151,19 +151,23 @@ public:
     bool push_edge(int s_index, int d_index, T_edge e_value) {
         if(s_index >= this->_vertices_size || s_index < 0 || d_index >= this->_vertices_size || d_index < 0) throw "out of bounds";
 
+        edge* last_ptr = nullptr;
         edge* now_ptr = _vertices_array[s_index].first_edge_ptr;
 
         while(now_ptr != nullptr) {
             if(now_ptr->dest_vertex_index == d_index) return false;
 
+            last_ptr = now_ptr;
             now_ptr = now_ptr->next_edge_ptr;
         }
 
         edge* new_ptr = new edge;
         new_ptr->value = e_value;
         new_ptr->dest_vertex_index = d_index;
-        new_ptr->next_edge_ptr = _vertices_array[s_index].first_edge_ptr;
-        _vertices_array[s_index].first_edge_ptr = new_ptr;
+        
+        if(last_ptr == nullptr) _vertices_array[s_index].first_edge_ptr = new_ptr;
+        else last_ptr->next_edge_ptr = new_ptr;
+
         this->_edges_size++;
 
         return true;
@@ -208,6 +212,7 @@ public:
                 
                 now_ptr = next_ptr;
             }
+            last_ptr = nullptr;
         }
 
         return true;

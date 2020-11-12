@@ -1,7 +1,10 @@
 #ifndef __DYNAMIC_ARRAY_HPP__
 #define __DYNAMIC_ARRAY_HPP__
 
-#include <cstring>
+#include <iostream>
+using namespace std;
+
+// #include <cstring>
 
 #define DYNAMIC_ARRAY_CAPACITY_MIN 16
 
@@ -14,8 +17,14 @@ private:
 
     void _resize(int new_capacity) {
         if(new_capacity < DYNAMIC_ARRAY_CAPACITY_MIN) return;
+
         T* n_p = new T[new_capacity]();
-        memcpy(n_p, _t_p, sizeof(T) * _size);
+        // @TODO: memcpy error in copy string
+        for(int i = 0; i < _size; i++) {
+            n_p[i] = _t_p[i];
+        }
+        //memcpy(&n_p[0], &_t_p[0], sizeof(T) * _size);
+
         delete[] _t_p;
         _t_p = n_p;
         _capacity = new_capacity;

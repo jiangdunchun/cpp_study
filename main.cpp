@@ -429,6 +429,37 @@ int main(int, char**) {
     }
     cout << endl;
 
+    // my_al_graph.remove_edge(1,2);
+    // my_al_graph.remove_edge(2,4);
+
+    // deepth_array = my_al_graph.get_deepth_first_tranverse();
+    // cout << "deepth first tranverse of my_al_graph: ";
+    // for(int j = 0; j < deepth_array.size(); j++) {
+    //         cout << deepth_array.at(j) << ",";
+    // }
+    // cout << endl;
+    // breadth_array = my_al_graph.get_breadth_first_tranverse();
+    // cout << "breadth first tranverse of my_al_graph: ";
+    // for(int j = 0; j < breadth_array.size(); j++) {
+    //         cout << breadth_array.at(j) << ",";
+    // }
+    // cout << endl;
+
+    my_al_graph.remove_vertex(5);
+
+    deepth_array = my_al_graph.get_deepth_first_tranverse();
+    cout << "deepth first tranverse of my_al_graph: ";
+    for(int j = 0; j < deepth_array.size(); j++) {
+            cout << deepth_array.at(j) << ",";
+    }
+    cout << endl;
+    breadth_array = my_al_graph.get_breadth_first_tranverse();
+    cout << "breadth first tranverse of my_al_graph: ";
+    for(int j = 0; j < breadth_array.size(); j++) {
+            cout << breadth_array.at(j) << ",";
+    }
+    cout << endl;
+
     cout << "-----------------------------"<< endl;
 
     // test for sorter
