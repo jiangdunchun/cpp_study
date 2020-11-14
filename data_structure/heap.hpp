@@ -72,7 +72,10 @@ public:
 
         T value = _t_p[0];
         _t_p[0] = _t_p[_size-1];
-        _t_p[_size-1] = 0;
+
+        // @TODO: set to null
+        // _t_p[_size-1] = 0;
+        
         _size--;
         _fix();
         return value;

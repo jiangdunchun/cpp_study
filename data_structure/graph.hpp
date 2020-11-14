@@ -3,6 +3,7 @@
 
 #include "dynamic_array.hpp"
 #include "queue.hpp"
+#include "heap.hpp"
 
 template<class T_vertex, class T_edge>
 class graph {
@@ -22,17 +23,17 @@ public:
     bool is_empty() {
         return _vertices_size == 0;
     }
-    int get_vertices_capacity() {
+    int vertices_capacity() {
         return _vertices_capacity;
     }
-    int get_vertices_size() {
+    int vertices_size() {
         return _vertices_size;
     }
-    int get_edges_size() {
+    int edges_size() {
         return _edges_size;
     }
     virtual T_vertex& get_vertex(int v_index) = 0;
-    virtual int get_edges_size_of_vertex(int v_index) = 0;
+    virtual int edges_size_of_vertex(int v_index) = 0;
     virtual T_edge& get_edge(int v_index, int e_index) = 0;
     virtual int get_neighbor(int v_index, int e_index) = 0;
     virtual bool push_vertex(T_vertex v_value) = 0;
@@ -41,25 +42,34 @@ public:
     virtual bool remove_edge(int s_index, int d_index) = 0;
     virtual dynamic_array<T_vertex> get_deepth_first_tranverse() = 0;
     virtual dynamic_array<T_vertex> get_breadth_first_tranverse() = 0;
+    // virtual graph<T_vertex, T_edge> get_min_tree_prim() = 0;
+    // virtual graph<T_vertex, T_edge> get_min_tree_kruskal() = 0;
+    virtual dynamic_array<T_edge> get_min_distance(int v_index) = 0; 
 };
 
 template<class T_vertex, class T_edge>
 class adjacency_list_graph: public graph<T_vertex, T_edge> {
 private:
-    struct vertex;
-    struct edge;
-    struct vertex{
-        T_vertex value;
-        edge* first_edge_ptr = nullptr;
+    struct edge_item {
+        int v_index;
+        int e_index;
+        T_edge e_value;
     };
     struct edge{
         T_edge value;
         int dest_vertex_index;
         edge* next_edge_ptr = nullptr;
     };
-    
+    struct vertex{
+        T_vertex value;
+        edge* first_edge_ptr = nullptr;
+    };
+
     vertex* _vertices_array;
 
+    static bool _min_compare_func(edge_item a, edge_item b) {
+        return a.e_value<b.e_value;
+    }
     void _deepth_first_tranverse(int v_index, bool* is_visted_array, dynamic_array<T_vertex>& ret_array) {
         if(!is_visted_array[v_index]) {
             is_visted_array[v_index] = true;
@@ -98,7 +108,7 @@ public:
 
         return _vertices_array[v_index].value;
     }
-    int get_edges_size_of_vertex(int v_index) {
+    int edges_size_of_vertex(int v_index) {
         if(v_index >= this->_vertices_size || v_index < 0) throw "out of vertex bounds";
 
         int i = 0;
@@ -271,6 +281,83 @@ public:
 
             
         }
+
+        return ret_array;
+    }
+    // @TODO: bug here
+    adjacency_list_graph<T_vertex, T_edge> get_min_tree_prim() {
+        adjacency_list_graph<T_vertex, T_edge> ret_graph(this->_vertices_capacity);
+        for(int i = 0; i < this->_vertices_size; i++) {
+            ret_graph.push_vertex(_vertices_array[i].value);
+        }
+
+        bool* is_visted_array = new bool[this->_vertices_size]{false};
+        heap<edge_item> buffer(this->_edges_size, _min_compare_func);
+
+        is_visted_array[0] = true;
+        for(int i = 0; i < edges_size_of_vertex(0); i++) {
+            edge_item new_edge_item;
+            new_edge_item.v_index = 0;
+            new_edge_item.e_index = i;
+            new_edge_item.e_value = get_edge(new_edge_item.v_index, new_edge_item.e_index);
+            buffer.push(new_edge_item);
+        }
+        
+        while(!buffer.is_empty()) {
+            edge_item now_edge_item = buffer.pop();
+            int dest_index = get_neighbor(now_edge_item.v_index, now_edge_item.e_index);
+            if(!is_visted_array[dest_index]) {
+                ret_graph.push_edge(now_edge_item.v_index, dest_index, get_edge(now_edge_item.v_index, now_edge_item.e_index));
+                is_visted_array[dest_index] = true;
+
+                for(int i = 0; i < edges_size_of_vertex(dest_index); i++) {
+                    edge_item new_edge_item;
+                    new_edge_item.v_index = dest_index;
+                    new_edge_item.e_index = i;
+                    new_edge_item.e_value = get_edge(new_edge_item.v_index, new_edge_item.e_index);
+                    buffer.push(new_edge_item);
+                }
+            }
+        }
+        
+        return ret_graph;
+    }
+    // @TODO: bug here
+    adjacency_list_graph<T_vertex, T_edge> get_min_tree_kruskal() {
+        adjacency_list_graph<T_vertex, T_edge> ret_graph(this->_vertices_capacity);
+        heap<edge_item> buffer(this->_edges_size, _min_compare_func);
+
+        for(int i = 0; i < this->_vertices_size; i++) {
+            ret_graph.push_vertex(_vertices_array[i].value);
+
+            for(int j = 0; j < edges_size_of_vertex(i); j++) {
+                edge_item new_edge_item;
+                new_edge_item.v_index = i;
+                new_edge_item.e_index = j;
+                new_edge_item.e_value = get_edge(new_edge_item.v_index, new_edge_item.e_index);
+                buffer.push(new_edge_item);
+            }
+        }
+
+        bool* is_visted_array = new bool[this->_vertices_size]{false};
+
+        while(!buffer.is_empty()) {
+            edge_item now_edge_item = buffer.pop();
+            int dest_index = get_neighbor(now_edge_item.v_index, now_edge_item.e_index);
+
+            if(is_visted_array[now_edge_item.v_index] == false || is_visted_array[dest_index] == false) {
+                ret_graph.push_edge(now_edge_item.v_index, dest_index, get_edge(now_edge_item.v_index, now_edge_item.e_index));
+                is_visted_array[now_edge_item.v_index] = true;
+                is_visted_array[dest_index] = true;
+            }
+        }
+
+        return ret_graph;
+    }
+    dynamic_array<T_edge> get_min_distance(int v_index) {
+        dynamic_array<T_edge> ret_array;
+
+
 
         return ret_array;
     }

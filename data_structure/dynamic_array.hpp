@@ -1,11 +1,6 @@
 #ifndef __DYNAMIC_ARRAY_HPP__
 #define __DYNAMIC_ARRAY_HPP__
 
-#include <iostream>
-using namespace std;
-
-// #include <cstring>
-
 #define DYNAMIC_ARRAY_CAPACITY_MIN 16
 
 template <class T>
@@ -19,6 +14,7 @@ private:
         if(new_capacity < DYNAMIC_ARRAY_CAPACITY_MIN) return;
 
         T* n_p = new T[new_capacity]();
+
         // @TODO: memcpy error in copy string
         for(int i = 0; i < _size; i++) {
             n_p[i] = _t_p[i];
@@ -54,11 +50,12 @@ public:
     void insert_at(int index, T value) {
         if(index >= _size || index < 0) throw "out of bounds";
 
+        // @TODO: memcpy error
         for(int i = _size; i > index; i--) {
             _t_p[i] = _t_p[i-1];
         }
-        // @TODO: use memcpy
         // memcpy(&_t_p[index+1], &_t_p[index], sizeof(T) * (_size-index));
+
         _t_p[index] = value;
         _size++;
 
@@ -81,13 +78,16 @@ public:
         if(index >= _size || index < 0) throw "out of bounds";
 
         T value = _t_p[index];
+
+        // @TODO: memcpy error
         for(int i = index; i < _size; i++) {
             _t_p[i] = _t_p[i+1];
         }
-        // @TODO: use memcpy
         // memcpy(&_t_p[index], &_t_p[index+1], sizeof(T) * (_size-index-1));
+
         // @TODO: set last position to null
         //_t_p[_size-1] = NULL;
+
         _size--;
 
         if(_size < _capacity / 4) {

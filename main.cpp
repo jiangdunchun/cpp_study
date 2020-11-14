@@ -399,8 +399,8 @@ int main(int, char**) {
     my_al_graph.push_vertex("H");
     my_al_graph.push_vertex("I");
 
-    my_al_graph.push_edge(0, 1, 2);
-    my_al_graph.push_edge(0, 2, 1);
+    my_al_graph.push_edge(0, 1, 1);
+    my_al_graph.push_edge(0, 2, 2);
     my_al_graph.push_edge(1, 2, 3);
     my_al_graph.push_edge(1, 3, 4);
     my_al_graph.push_edge(1, 4, 5);
@@ -445,15 +445,15 @@ int main(int, char**) {
     // }
     // cout << endl;
 
-    my_al_graph.remove_vertex(5);
+    adjacency_list_graph<string, int> my_al_min_tree = my_al_graph.get_min_tree_kruskal();
 
-    deepth_array = my_al_graph.get_deepth_first_tranverse();
+    deepth_array = my_al_min_tree.get_deepth_first_tranverse();
     cout << "deepth first tranverse of my_al_graph: ";
     for(int j = 0; j < deepth_array.size(); j++) {
             cout << deepth_array.at(j) << ",";
     }
     cout << endl;
-    breadth_array = my_al_graph.get_breadth_first_tranverse();
+    breadth_array = my_al_min_tree.get_breadth_first_tranverse();
     cout << "breadth first tranverse of my_al_graph: ";
     for(int j = 0; j < breadth_array.size(); j++) {
             cout << breadth_array.at(j) << ",";
