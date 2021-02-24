@@ -1,0 +1,62 @@
+#ifndef C_OCT_TREE_SCENE_H
+#define C_OCT_TREE_SCENE_H
+
+#include <glm.hpp>
+
+#include "world_object_renderer.h"
+
+#define OCT_TREE_NODE_MAX_SIZE 100000.0f
+
+namespace gWorldAr {
+    class oct_tree_scene {
+    private:
+        enum children_index {
+            TOP_LEFT_FRONT = 0,
+            TOP_LEFT_BACK,
+            TOP_RIGHT_FRONT,
+            TOP_RIGHT_BACK,
+            BOTTOM_LEFT_FRONT,
+            BOTTOM_LEFT_BACK,
+            BOTTOM_RIGHT_FRONT,
+            BOTTOM_RIGHT_BACK,
+            CHILDREN_NUM,
+        };
+
+        struct oct_tree_node {
+            glm::vec3 min;
+            glm::vec3 max;
+            oct_tree_node* parent_p;
+            oct_tree_node* child_ps[children_index::CHILDREN_NUM] = { nullptr };
+            std::vector<WorldObjectRenderer*> obj_ps;
+            unsigned int obj_num = 0;
+
+            oct_tree_node(glm::vec3 min_p, glm::vec3 max_p, oct_tree_node* parent_p){
+                this->min = min_p;
+                this->max = max_p;
+                this->parent_p = parent_p;
+            }
+            ~oct_tree_node(){
+                for (unsigned int i = 0; i < children_index::CHILDREN_NUM; i++) {
+                        if(child_ps[i] != nullptr) delete child_ps[i];
+                }
+            }
+
+            bool insert_obj(glm::vec3* p1, unsigned int size) {
+                 return true;
+            }
+        };
+
+        oct_tree_node* _root_node;
+
+        oct_tree_scene();
+        ~oct_tree_scene();
+
+        static oct_tree_scene* _instance;
+    public:
+        static oct_tree_scene* get_instance();
+        void insert(WorldObjectRenderer* obj_p);
+        void remove(WorldObjectRenderer* obj_p);
+    };
+}
+
+#endif   // C_OCT_TREE_SCENE_H
